@@ -12,5 +12,13 @@ Route::group([
 ], function (Router $router) {
 
     $router->get('/', 'HomeController@index')->name('home');
+    $router->resource('area-stands', District\AreaStandController::class);
+
+    //  区站基础管理
+    $router->group([
+        'prefix'        => 'district',
+    ],function (Router $router) {
+        $router->resource('area-stands', District\AreaStandController::class);
+    });
 
 });
