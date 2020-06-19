@@ -1,0 +1,8 @@
+{
+    "Id": "ID",
+    "Created at":"创建时间",
+    "Updated at":"更新时间",
+    "Name":"名字",
+    "Email":"邮箱",
+    "Password":"密码"
+}
