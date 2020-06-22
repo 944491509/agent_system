@@ -28,10 +28,14 @@ class AreaStandController extends AdminController
         $grid = new Grid(new AreaStand());
         $grid->column('id', __('Id'));
         $grid->column('name', __('Name'));
-        $grid->column('email', __('Email'));
-        $grid->column('password', __('Password'));
+        $grid->column('operator_text', __('Operator'))->display(function () {
+            return $this->operatorText();
+        });
+        $grid->column('explain_text', __('Explain'))->display(function () {
+            return $this->explainText();
+        });
+        $grid->column('remark', __('Remark'));
         $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
         return $grid;
     }
 
@@ -44,9 +48,13 @@ class AreaStandController extends AdminController
     protected function detail($id)
     {
         $show = new Show(AreaStand::findOrFail($id));
-
-
-
+        $areaStand = new AreaStand();
+        $operator = $areaStand->getAllOperator();
+        $show->field('id', __('Id'));
+        $show->field('city_id',__('cityId'));
+//        $show->column('city.name', __('cityId'));
+        $show->operator(__('Operator'))->using($operator);
+        $show->operator(__('Operator'))->using($operator);
         return $show;
     }
 
@@ -57,16 +65,19 @@ class AreaStandController extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new AreaStand());
-
+        $areaStand = new AreaStand();
+        $form = new Form($areaStand);
+        $operator = $areaStand->getAllOperator();
+        $explain = $areaStand->getAllExplain();
         $form->distpicker([
             'province_id' => '省',
             'city_id'     => '市',
             'district_id' => '区'
         ]);
-        $form->text('name');
-        $form->number('operator');
-        $form->number('explain');
+        $form->text('name',__('Name'));
+        $form->select('operator', '运营商')->options($operator);
+        $form->select('explain', '区域说明')->options($explain);
+        $form->textarea('remark', __('Remark'));
         return $form;
     }
 

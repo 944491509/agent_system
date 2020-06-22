@@ -4,5 +4,9 @@
     "Updated at":"更新时间",
     "Name":"名字",
     "Email":"邮箱",
-    "Password":"密码"
+    "Password":"密码",
+    "Explain" : "说明",
+    "Remark" : "备注",
+    "Operator" : "运营商",
+    "cityId" : "城市"
 }
