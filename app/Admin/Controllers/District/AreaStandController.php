@@ -47,6 +47,7 @@ class AreaStandController extends AdminController
      */
     protected function detail($id)
     {
+
         $show = new Show(AreaStand::findOrFail($id));
         $areaStand = new AreaStand();
         $operator = $areaStand->getAllOperator();
