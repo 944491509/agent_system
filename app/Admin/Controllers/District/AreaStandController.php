@@ -28,6 +28,9 @@ class AreaStandController extends AdminController
         $grid = new Grid(new AreaStand());
         $grid->column('id', __('Id'));
         $grid->column('name', __('Name'));
+        $grid->column('province.name', __('Province'));
+        $grid->column('city.name', __('City'));
+        $grid->column('district.name', __('District'));
         $grid->column('operator_text', __('Operator'))->display(function () {
             return $this->operatorText();
         });
@@ -50,11 +53,21 @@ class AreaStandController extends AdminController
         $show = new Show(AreaStand::findOrFail($id));
         $areaStand = new AreaStand();
         $operator = $areaStand->getAllOperator();
+        $explain = $areaStand->getAllExplain();
         $show->field('id', __('Id'));
-        $show->field('city_id',__('cityId'));
-//        $show->column('city.name', __('cityId'));
+        $show->field('province', __('Province'))->as(function ($content) {
+            return $content->name;
+        });
+        $show->field('city', __('City'))->as(function ($content) {
+            return $content->name;
+        });
+        $show->field('district', __('District'))->as(function ($content) {
+            return $content->name;
+        });
+
         $show->operator(__('Operator'))->using($operator);
-        $show->operator(__('Operator'))->using($operator);
+        $show->operator(__('Explain'))->using($explain);
+        $show->field('remark', __('Remark'));
         return $show;
     }
 
