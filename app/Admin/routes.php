@@ -19,6 +19,7 @@ Route::group([
         'prefix'        => 'district',
     ],function (Router $router) {
         $router->resource('area-stands', District\AreaStandController::class);
+        $router->resource('facilitators', District\FacilitatorsController::class);
     });
 
 });
