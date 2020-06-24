@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Router;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,12 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::group(['prefix'=> 'area'],function () {
+    Route::get('get-areas', 'Api\ChinaAreaController@getAreas')->name('api.area.get-areas');
+}) ;
+
+Route::group(['prefix'=>'user'], function(){
+    Route::any('index', 'Api\UserController@index');
 });

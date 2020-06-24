@@ -4,6 +4,7 @@ namespace App\Admin\Controllers\District;
 
 use App\Dao\ChinaAreaDao;
 use App\Dao\District\FacilitatorDao;
+use App\Models\ChinaArea;
 use App\Models\District\AreaStand;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -96,11 +97,34 @@ class AreaStandController extends AdminController
 
 
         $form->select('level','项目部'.__('Level'))->options($level)
-            ->when(AreaStand::PROVINCE_LEVEL,function (Form $form ) use($province) {
-                $form->select('province_id', __('Province'))->options($province);
-            })->when(AreaStand::CITY_LEVEL,function (Form $form) use($province){
-                $form->select('province_id', __('Province'))->options($province)->load();
+            ->when(AreaStand::PROVINCE_LEVEL,function (Form $form )  {
+                $form->select('province_id', __('City'))
+                    ->options(
+                        ChinaArea::where('parent_id', ChinaArea::CHINA)->select(['name','code as id'])->get() // 回显
+                    );
+            })->when(AreaStand::CITY_LEVEL,function (Form $form) {
+
+                $form->select('province_id', __('Province'))
+                    ->options(
+                        ChinaArea::where('parent_id', ChinaArea::CHINA)->pluck( 'name', 'id') // 回显
+                    )->load('city_id','/api/area/get-areas');
+
+                $form->select('city_id', __('City'))->options(function ($id) {
+                        return ChinaArea::where('id', $id)->pluck('name', 'id'); // 回显
+                    });
             })->when(AreaStand::DISTRICT_LEVEL,function (Form $form) {
+                $form->select('province_id', __('Province'))
+                    ->options(
+                        ChinaArea::where('parent_id', ChinaArea::CHINA)->pluck( 'name', 'id') // 回显
+                    )->load('city_id','/api/area/get-areas');
+
+                $form->select('city_id', __('City'))->options(function ($id) {
+                    return ChinaArea::where('id', $id)->pluck('name', 'code as id'); // 回显
+                })->load('district_id','/api/area/get-areas');
+
+                $form->select('district_id', __('District'))->options(function ($id) {
+                    return ChinaArea::where('id', $id)->pluck('name', 'id'); // 回显
+                });
 
             });
 

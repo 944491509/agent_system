@@ -19,7 +19,8 @@ class ChinaAreaDao
         } else {
             $map = ['parent_id' => $Id];
         }
-        return ChinaArea::where($map)->get();
+        $field = ['id', 'name as text'];
+        return ChinaArea::where($map)->select($field)->get();
     }
 
 
