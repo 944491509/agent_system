@@ -10,29 +10,29 @@ class ChinaAreaDao
 {
 
     /**
-     * @param null $Id
+     * @param null $code
      * @return mixed
      */
-    public function getArea($Id = null) {
-        if(is_null($Id)) {
+    public function getArea($code = null) {
+        if(is_null($code)) {
             $map = ['parent_id' => ChinaArea::CHINA];
         } else {
-            $map = ['parent_id' => $Id];
+            $area = $this->getAreaInfoByCode($code);
+            $map = ['parent_id' => $area['id']];
         }
-        return ChinaArea::where($map)->get();
+        $field = ['code as id', 'name as text'];
+        return ChinaArea::where($map)->select($field)->get();
     }
 
 
-    public function areas($id = null) {
-        if(is_null($id)) {
-            $id = ChinaArea::CHINA;
-        }
-        $data = $this->getArea($id);
-        $area = [];
-        foreach ($data as $key => $item) {
-            $area[$item->id] = $item->name;
-        }
-        return $area;
+    /**
+     * 详情
+     * @param $code
+     * @return mixed
+     */
+    public function getAreaInfoByCode($code) {
+        $map = ['code'=>$code];
+        return ChinaArea::where($map)->first();
     }
 
 }

@@ -33,6 +33,10 @@ class FacilitatorsController extends AdminController
         });
 
         $grid->column('created_at', __('Created at'));
+        $grid->actions(function ($actions) {
+            // 去掉查看
+            $actions->disableView();
+        });
 
         return $grid;
     }

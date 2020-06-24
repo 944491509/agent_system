@@ -14,7 +14,7 @@ class AreaStand extends Model
      */
     protected $fillable = [
         'id', 'province_id', 'city_id', 'district_id', 'name', 'operator', 'explain',
-        'remark', 'type', 'level', 'area_id'
+        'remark', 'type', 'level', 'area_id', 'parent_id',
     ];
 
     public $casts = [
@@ -37,6 +37,47 @@ class AreaStand extends Model
     const PROVINCE_LEVEL_TEXT = '省级';
     const CITY_LEVEL_TEXT = '市级';
     const DISTRICT_LEVEL_TEXT = '区/县级';
+
+    const TYPE_PROJECT = 1;
+    const TYPE_MAINTAIN = 2;
+    const TYPE_NETWORK = 3;
+    const TYPE_MANAGE = 4;
+
+    const TYPE_PROJECT_TEXT = '工程';
+    const TYPE_MAINTAIN_TEXT = '维护';
+    const TYPE_NETWORK_TEXT = '网优';
+    const TYPE_MANAGE_TEXT = '管理';
+
+
+    /**
+     * 业务类型
+     * @return string[]
+     */
+    public function getAllType() {
+        return [
+            self::TYPE_PROJECT => self::TYPE_PROJECT_TEXT,
+            self::TYPE_MAINTAIN => self::TYPE_MAINTAIN_TEXT,
+            self::TYPE_NETWORK => self::TYPE_NETWORK_TEXT,
+            self::TYPE_MANAGE => self::TYPE_MANAGE_TEXT,
+        ];
+    }
+
+
+    /**
+     * 业务类型
+     * @return string
+     */
+    public function typeText() {
+        if(empty($this->type)) {
+            return null;
+        }
+        $all = $this->getAllType();
+        $data = [];
+        foreach ($this->type as $key => $item) {
+            $data[] = $all[$item];
+        }
+        return implode(',', $data);
+    }
 
 
 
@@ -65,6 +106,16 @@ class AreaStand extends Model
     }
 
 
+    /**
+     * 当前级别
+     * @return string
+     */
+    public function levelText() {
+        $levels = $this->getAllLevel();
+        return $levels[$this->level] ?? '';
+    }
+
+
 
 
     /**
@@ -72,8 +123,28 @@ class AreaStand extends Model
      * @return string
      */
     public function explainText() {
-        $explain = $this->getAllExplain();
-        return $explain[$this->explain] ?? '';
+        if(empty($this->explain)) {
+            return null ;
+        }
+        $all = $this->getAllExplain();
+        $data = [];
+        foreach ($this->explain as $key => $item) {
+            $data[] = $all[$item] ?? '';
+        }
+        return implode(',', $data);
+    }
+
+
+    /**
+     * 服务商
+     * @return string|null
+     */
+    public function operatorText() {
+        if(empty($this->operator)) {
+            return null;
+        }
+        $operator = Facilitators::whereIn('id',$this->operator)->pluck('name')->toArray();
+        return implode(',', $operator);
     }
 
 

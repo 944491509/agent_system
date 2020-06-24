@@ -7,10 +7,12 @@
     "Password":"密码",
     "Explain" : "说明",
     "Remark" : "备注",
-    "Operator" : "运营商",
+    "Operator" : "服务商",
     "Province" : "省份",
     "City" : "城市",
     "District" : "区县",
     "Status" : "状态",
-    "Level" : "等级"
+    "Level" : "等级",
+    "Type" : "类别",
+    "Area" : "区域"
 }
