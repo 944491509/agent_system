@@ -47,6 +47,10 @@ class AreaStandController extends AdminController
 
         $grid->column('remark', __('Remark'));
         $grid->column('created_at', __('Created at'));
+        $grid->actions(function ($actions) {
+            // 去掉查看
+            $actions->disableView();
+        });
         return $grid;
     }
 
@@ -56,30 +60,17 @@ class AreaStandController extends AdminController
      * @param mixed $id
      * @return Show
      */
-    protected function detail($id)
-    {
-
-        $show = new Show(AreaStand::findOrFail($id));
-        $areaStand = new AreaStand();
-        $explain = $areaStand->getAllExplain();
-        $show->field('id', __('Id'));
-//        $show->field('province', __('Province'))->as(function ($content) {
-//            return $content->name ?? '';
-//        });
-//        $show->field('city', __('City'))->as(function ($content) {
-//            return $content->name ?? '';
-//        });
-//        $show->field('district', __('District'))->as(function ($content) {
-//            return $content->name ?? '';
-//        });
-
-//        $show->operator(__('Operator'))->as(function ($content) {
-//            return $content;
-//        });
-        $show->explain(__('Explain'))->using($explain);
-        $show->field('remark', __('Remark'));
-        return $show;
-    }
+//    protected function detail($id)
+//    {
+//
+//        $show = new Show(AreaStand::findOrFail($id));
+//        $areaStand = new AreaStand();
+//        $explain = $areaStand->getAllExplain();
+//        $show->field('id', __('Id'));
+//        $show->explain(__('Explain'))->using($explain);
+//        $show->field('remark', __('Remark'));
+//        return $show;
+//    }
 
     /**
      * Make a form builder.
@@ -109,11 +100,15 @@ class AreaStandController extends AdminController
                 $form->select('province_id', __('Province'))
                     ->options(
                         ChinaArea::where('parent_id', ChinaArea::CHINA)->pluck( 'name', 'code') // 回显
-                    )->load('city_id','/api/area/get-areas');
+                    )->loads(['city_id','parent_id'],['/api/area/get-areas','api/stand/get-parent-stand']);
 
                 $form->select('city_id', __('City'))->options(function ($id) {
                         return ChinaArea::where('id', $id)->pluck('name', 'code'); // 回显
                     });
+//                $form->select('parent_id','上级项目部')->options(function ($id) {
+//                    dump($id);
+//                });
+
             })->when(AreaStand::DISTRICT_LEVEL,function (Form $form) {
                 $form->select('province_id', __('Province'))
                     ->options(
@@ -131,9 +126,9 @@ class AreaStandController extends AdminController
             });
 
         $form->multipleSelect('type', '项目部'.__('Type'))->options($types);
-        $form->multipleSelect('operator', '运营商')->options($facilitators);
-        $form->multipleSelect('explain', '区域说明')->options($explain);
-        $form->textarea('remark', __('Remark'));
+        $form->multipleSelect('operator', '项目部'.__('Operator'))->options($facilitators);
+        $form->multipleSelect('explain', '项目部'.__('Explain'))->options($explain);
+        $form->textarea('remark', '项目部'.__('Remark'));
         return $form;
     }
 }

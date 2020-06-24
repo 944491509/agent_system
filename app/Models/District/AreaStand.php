@@ -14,7 +14,7 @@ class AreaStand extends Model
      */
     protected $fillable = [
         'id', 'province_id', 'city_id', 'district_id', 'name', 'operator', 'explain',
-        'remark', 'type', 'level', 'area_id'
+        'remark', 'type', 'level', 'area_id', 'parent_id',
     ];
 
     public $casts = [
