@@ -9,9 +9,9 @@ use \Illuminate\Http\Request;
 class ChinaAreaController extends Controller
 {
     public function getAreas(Request $request) {
-        $id = $request->get('q');
+        $code = $request->get('q');
         $chinaAreaDao = new ChinaAreaDao();
-        $result = $chinaAreaDao->getArea($id);
+        $result = $chinaAreaDao->getArea($code);
         return $result;
     }
 

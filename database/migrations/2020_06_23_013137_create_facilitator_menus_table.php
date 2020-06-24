@@ -28,8 +28,8 @@ class CreateFacilitatorMenusTable extends Migration
         $data = [
             [
                 'parent_id' => $id,
-                'order' => 0,
-                'title' => '区站列表',
+                'order' => 1,
+                'title' => '项目部管理',
                 'icon' => 'fa-bars',
                 'uri' => 'district/area-stands',
                 'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
