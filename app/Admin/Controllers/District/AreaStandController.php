@@ -91,16 +91,11 @@ class AreaStandController extends AdminController
         $province = $chinaAreaDao->areas();
 
         $form->text('name','项目部'.__('Name'));
-//        $form->select('level', '级别')->options($level);
-//        $form->select('province_id', __('Province'))->options($province);
-
 
         $form->select('level','项目部'.__('Level'))->options($level)
             ->when(AreaStand::PROVINCE_LEVEL,function (Form $form ) use($province) {
                 $form->select('province_id', __('Province'))->options($province);
-            })->when(AreaStand::CITY_LEVEL,function (Form $form) use($province){
-                $form->select('province_id', __('Province'))->options($province)->load();
-            })->when(AreaStand::DISTRICT_LEVEL,function (Form $form) {
+            })->when(AreaStand::CITY_LEVEL,function (Form $form ) use($province) {
 
             });
 

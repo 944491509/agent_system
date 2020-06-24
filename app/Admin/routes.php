@@ -16,8 +16,9 @@ Route::group([
 
     //  区站基础管理
     $router->group([
-        'prefix'        => 'district',
+        'prefix' => 'district',
     ],function (Router $router) {
+        $router->resource('users', District\UserController::class);
         $router->resource('area-stands', District\AreaStandController::class);
         $router->resource('facilitators', District\FacilitatorsController::class);
     });
