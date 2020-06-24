@@ -26,5 +26,5 @@ Route::group(['prefix'=> 'area'],function () {
 
 // 获取项目部的上级
 Route::group(['prefix'=> 'stand'],function () {
-    Route::get('get-areas', 'Api\District\AreaStandController@getParentStand')->name('api.stand.get-parent-stand');
+    Route::get('get-parent-stand', 'Api\District\AreaStandController@getParentStand')->name('api.stand.get-parent-stand');
 });
