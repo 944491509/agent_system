@@ -2,6 +2,8 @@
 
 namespace App\Admin\Controllers\District;
 
+use App\Dao\ChinaAreaDao;
+use App\Dao\District\FacilitatorDao;
 use App\Models\District\AreaStand;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -16,7 +18,7 @@ class AreaStandController extends AdminController
      *
      * @var string
      */
-    protected $title = '区站管理';
+    protected $title = '项目部管理';
 
     /**
      * Make a grid builder.
@@ -55,7 +57,6 @@ class AreaStandController extends AdminController
         $areaStand = new AreaStand();
         $operator = $areaStand->getAllOperator();
         $explain = $areaStand->getAllExplain();
-//        dd($operator);
         $show->field('id', __('Id'));
         $show->field('province', __('Province'))->as(function ($content) {
             return $content->name;
@@ -82,15 +83,28 @@ class AreaStandController extends AdminController
     {
         $areaStand = new AreaStand();
         $form = new Form($areaStand);
-        $operator = $areaStand->getAllOperator();
+        $facilitatorDao = new FacilitatorDao();
+        $facilitators = $facilitatorDao->facilitators();
+        $level = $areaStand->getAllLevel();
         $explain = $areaStand->getAllExplain();
-        $form->distpicker([
-            'province_id' => '省',
-            'city_id'     => '市',
-            'district_id' => '区'
-        ]);
-        $form->text('name',__('Name'));
-        $form->multipleSelect('operator', '运营商')->options($operator);
+        $chinaAreaDao = new ChinaAreaDao();
+        $province = $chinaAreaDao->areas();
+
+        $form->text('name','项目部'.__('Name'));
+//        $form->select('level', '级别')->options($level);
+//        $form->select('province_id', __('Province'))->options($province);
+
+
+        $form->select('level','项目部'.__('Level'))->options($level)
+            ->when(AreaStand::PROVINCE_LEVEL,function (Form $form ) use($province) {
+                $form->select('province_id', __('Province'))->options($province);
+            })->when(AreaStand::CITY_LEVEL,function (Form $form) use($province){
+                $form->select('province_id', __('Province'))->options($province)->load();
+            })->when(AreaStand::DISTRICT_LEVEL,function (Form $form) {
+
+            });
+
+        $form->multipleSelect('operator', '运营商')->options($facilitators);
         $form->multipleSelect('explain', '区域说明')->options($explain);
         $form->textarea('remark', __('Remark'));
         return $form;

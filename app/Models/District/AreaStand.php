@@ -13,47 +13,30 @@ class AreaStand extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'city_id', 'district_id', 'name', 'operator', 'explain', 'remark'
+        'id', 'province_id', 'city_id', 'district_id', 'name', 'operator', 'explain',
+        'remark', 'type', 'level', 'area_id'
     ];
 
+    public $casts = [
+        'type' => 'array',
+        'operator' => 'array',
+        'explain' => 'array',
+    ];
 
-    // 运营商
-    const LINK = 1;
-    const MOVE = 2;
-    const TELECOM = 3;
-    const LINK_TEXT = '联通';
-    const MOVE_TEXT = '移动';
-    const TELECOM_TEXT = '电信';
 
     // 区域说明
     const MOBILE_NETWORK = 1;
     const FIXED_NETWORK = 2;
-    const MOBILE_FIXED_NETWORK = 3;
     const MOBILE_NETWORK_TEXT = '移网';
     const FIXED_NETWORK_TEXT = '固网';
-    const MOBILE_FIXED_NETWORK_TEXT = '移网/固网';
 
+    const PROVINCE_LEVEL = 1;
+    const CITY_LEVEL = 2;
+    const DISTRICT_LEVEL = 3;
 
-    /**
-     * 获取全部运营商
-     * @return string[]
-     */
-    public function getAllOperator() {
-        return [
-            self::LINK => self::LINK_TEXT,
-            self::MOVE => self::MOVE_TEXT,
-            self::TELECOM => self::TELECOM_TEXT,
-        ];
-    }
-
-    /**
-     * 获取当前运营商
-     * @return string
-     */
-    public function operatorText() {
-        $operator = $this->getAllOperator();
-        return $operator[$this->operator] ?? '';
-    }
+    const PROVINCE_LEVEL_TEXT = '省级';
+    const CITY_LEVEL_TEXT = '市级';
+    const DISTRICT_LEVEL_TEXT = '区/县级';
 
 
 
@@ -65,9 +48,23 @@ class AreaStand extends Model
         return [
             self::MOBILE_NETWORK => self::MOBILE_NETWORK_TEXT,
             self::FIXED_NETWORK => self::FIXED_NETWORK_TEXT,
-            self::MOBILE_FIXED_NETWORK => self::MOBILE_FIXED_NETWORK_TEXT
         ];
     }
+
+
+    /**
+     * 所有的等级
+     * @return string[]
+     */
+    public function getAllLevel() {
+        return [
+            self::PROVINCE_LEVEL => self::PROVINCE_LEVEL_TEXT,
+            self::CITY_LEVEL => self::CITY_LEVEL_TEXT,
+            self::DISTRICT_LEVEL => self::DISTRICT_LEVEL_TEXT,
+        ];
+    }
+
+
 
 
     /**
@@ -107,4 +104,5 @@ class AreaStand extends Model
         return $this->belongsTo(ChinaArea::class, 'district_id','code');
 
     }
+
 }
