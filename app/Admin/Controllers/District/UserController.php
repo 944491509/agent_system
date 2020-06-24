@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Admin\Controllers\District
+namespace App\Admin\Controllers\District;
 
-use App\User;
+use App\Models\District\User;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
