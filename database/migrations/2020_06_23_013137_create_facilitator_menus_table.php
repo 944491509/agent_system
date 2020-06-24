@@ -7,6 +7,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateFacilitatorMenusTable extends Migration
 {
+
     /**
      * Run the migrations.
      *
