@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Admin\Controllers;
+namespace App\Admin\Controllers\District;
 
 use App\Models\District\Department;
 use Encore\Admin\Controllers\AdminController;
@@ -54,8 +54,8 @@ class DepartmentController extends AdminController
     protected function form()
     {
         $form = new Form(new Department());
-
-
+        $form->text('name', __('Name'));
+        $form->text('name', __('Name'));
 
         return $form;
     }
