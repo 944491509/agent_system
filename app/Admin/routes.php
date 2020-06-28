@@ -21,6 +21,7 @@ Route::group([
         $router->resource('users', District\UserController::class);
         $router->resource('area-stands', District\AreaStandController::class);
         $router->resource('facilitators', District\FacilitatorsController::class);
+            $router->resource('departments', District\DepartmentController::class);
     });
 
 });
