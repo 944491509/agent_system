@@ -40,7 +40,7 @@ class AreaStandController extends AdminController
             $filter->column(1/2, function ($filter) use ($areaStand){
                 $filter->like('name', '项目部'.__('Name'));
                 $filter->like('explain', '项目部'.__('Explain'))->select($areaStand->getAllExplain());
-                $filter->distpicker('province_id', 'city_id', 'district_id','请选择区域');
+                $filter->distpicker('province_id', 'city_id', 'district_id','项目部区域');
             });
 
             $filter->column(1/2, function ($filter) use ($areaStand){
