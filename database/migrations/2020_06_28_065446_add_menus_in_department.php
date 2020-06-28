@@ -20,7 +20,7 @@ class AddMenusInDepartment extends Migration
                 'parent_id' => $id,
                 'order' => 0,
                 'title' => '维护部门管理',
-                'icon' => 'fa-user',
+                'icon' => 'fa-group',
                 'uri' => 'district/departments',
                 'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
                 'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
