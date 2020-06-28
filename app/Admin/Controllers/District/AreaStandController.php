@@ -40,13 +40,14 @@ class AreaStandController extends AdminController
             $filter->column(1/2, function ($filter) use ($areaStand){
                 $filter->like('name', '项目部'.__('Name'));
                 $filter->like('explain', '项目部'.__('Explain'))->select($areaStand->getAllExplain());
+                $filter->distpicker('province_id', 'city_id', 'district_id','请选择区域');
             });
 
             $filter->column(1/2, function ($filter) use ($areaStand){
                 $filter->equal('level','项目部'.__('Level'))->select($areaStand->getAllLevel());
                 $filter->like('type','项目部'.__('Type'))->select($areaStand->getAllType());
-
             });
+
 
 
         });
@@ -108,9 +109,6 @@ class AreaStandController extends AdminController
                 $form->select('city_id', __('City'))->options(function ($id) {
                         return ChinaArea::where('id', $id)->pluck('name', 'code'); // 回显
                     });
-                $form->select('parent_id','上级项目部')->options(function ($id) {
-                    return AreaStand::where('id',$id)->pluck('name','id');
-                });
 
             })->when(AreaStand::DISTRICT_LEVEL,function (Form $form) {
                 $form->select('province_id', __('Province'))
