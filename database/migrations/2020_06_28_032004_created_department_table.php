@@ -19,6 +19,7 @@ class CreatedDepartmentTable extends Migration
            $table->string('name')->comment('维护部门名称');
            $table->string('group')->comment('维护部门班组');
            $table->tinyInteger('rank')->comment('维护部门级别');
+           $table->timestamps();
         });
 
         DB::statement(" ALTER TABLE departments comment '维护部门表' ");

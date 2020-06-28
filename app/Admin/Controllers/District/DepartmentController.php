@@ -2,6 +2,8 @@
 
 namespace App\Admin\Controllers\District;
 
+use App\Dao\District\AreaStandDao;
+use App\Models\District\AreaStand;
 use App\Models\District\Department;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -15,7 +17,7 @@ class DepartmentController extends AdminController
      *
      * @var string
      */
-    protected $title = 'Department';
+    protected $title = '维护部门管理';
 
     /**
      * Make a grid builder.
@@ -26,7 +28,19 @@ class DepartmentController extends AdminController
     {
         $grid = new Grid(new Department());
 
+        $grid->column('area_stand_id', '所属项目部')->display(function($id) {
+            return AreaStand::find($id)->name;
+        });
+        $grid->column('name','维护部门名称');
+        $grid->column('group' , '维护班组名称');
+        $grid->column('rank', '等级');
 
+        $grid->column('created_at');
+
+        $grid->actions(function ($actions) {
+            // 去掉查看
+            $actions->disableView();
+        });
 
         return $grid;
     }
@@ -41,8 +55,6 @@ class DepartmentController extends AdminController
     {
         $show = new Show(Department::findOrFail($id));
 
-
-
         return $show;
     }
 
@@ -54,8 +66,16 @@ class DepartmentController extends AdminController
     protected function form()
     {
         $form = new Form(new Department());
-        $form->text('name', __('Name'));
-        $form->text('name', __('Name'));
+        $areaStandDao  = new AreaStandDao;
+        $data = $areaStandDao->getAllAreaStand();
+        $areaStand = [];
+        foreach ($data as $key => $val) {
+            $areaStand[$val['id']] = $val['name'];
+        }
+        $form->select('area_stand_id', '所属项目部')->options($areaStand);
+        $form->text('name', '维护部门名称')->required();
+        $form->text('group', '维护班组名称')->required();
+        $form->number('rank', '等级')->rules('required|min:0|integer')->default(0);
 
         return $form;
     }
