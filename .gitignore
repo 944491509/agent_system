@@ -15,4 +15,5 @@ yarn-error.log
 /vendor/
 node_modules/
 composer.lock
-
+_ide_helper.php
+.phpstorm.meta.php

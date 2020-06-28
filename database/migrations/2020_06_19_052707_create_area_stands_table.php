@@ -16,8 +16,8 @@ class CreateAreaStandsTable extends Migration
     {
         Schema::create('area_stands', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('city_id')->comment('城市');
-            $table->integer('district_id')->comment('区县');
+            $table->integer('city_id')->default(0)->comment('城市')->nullable();
+            $table->integer('district_id')->default(0)->comment('区县')->nullable();
             $table->string('name', 50)->comment('区站名称');
             $table->tinyInteger('operator')->default(1)->comment('运营商 1:联通 2:移动 3:电信');
             $table->tinyInteger('explain')->comment('说明');
