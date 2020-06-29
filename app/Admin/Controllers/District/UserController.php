@@ -15,7 +15,7 @@ class UserController extends AdminController
      *
      * @var string
      */
-    protected $title = 'User';
+    protected $title = '维护人员管理';
 
     /**
      * Make a grid builder.
@@ -26,14 +26,20 @@ class UserController extends AdminController
     {
         $grid = new Grid(new User());
 
-        $grid->column('id', __('Id'));
-        $grid->column('name', __('Name'));
-        $grid->column('email', __('Email'));
-        $grid->column('email_verified_at', __('Email verified at'));
-        $grid->column('password', __('Password'));
-        $grid->column('remember_token', __('Remember token'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('id', '维护地市');
+        $grid->column('name', '项目部名称');
+        $grid->column('email', '部门名称');
+        $grid->column('email_verified_at', '班组名称');
+        $grid->column('password', '姓名');
+        $grid->column('remember_token', '性别');
+        $grid->column('created_at', '岗位');
+        $grid->column('updated_at', '专业');
+        $grid->column('updated_at', '手机号1');
+        $grid->column('updated_at', '手机号2');
+        $grid->column('updated_at', '集团短号');
+        $grid->column('updated_at', '学历');
+        $grid->column('updated_at', '生日');
+        $grid->column('updated_at', '身份证号码');
 
         return $grid;
     }
