@@ -18,7 +18,7 @@ class AddMenusInUser extends Migration
         $data = [
             [
                 'parent_id' => $id,
-                'order' => 0,
+                'order' => 2,
                 'title' => '维护人员管理',
                 'icon' => 'fa-user',
                 'uri' => 'district/users',

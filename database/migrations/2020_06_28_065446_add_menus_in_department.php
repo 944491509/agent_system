@@ -18,7 +18,7 @@ class AddMenusInDepartment extends Migration
         $data = [
             [
                 'parent_id' => $id,
-                'order' => 0,
+                'order' => 3,
                 'title' => '维护部门管理',
                 'icon' => 'fa-group',
                 'uri' => 'district/departments',
