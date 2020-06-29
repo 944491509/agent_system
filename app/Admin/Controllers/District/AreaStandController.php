@@ -69,8 +69,8 @@ class AreaStandController extends AdminController
         $grid->column('remark', __('Remark'));
         $grid->column('created_at', __('Created at'));
         $grid->actions(function ($actions) {
-            // 去掉查看
-            $actions->disableView();
+            $actions->disableView(); // 去掉查看
+            $actions->disableDelete(); // todo 暂时关闭删除 删除逻辑后需要修改
         });
         return $grid;
     }
@@ -130,6 +130,12 @@ class AreaStandController extends AdminController
         $form->multipleSelect('operator', '项目部'.__('Operator'))->options($facilitators);
         $form->multipleSelect('explain', '项目部'.__('Explain'))->options($explain);
         $form->textarea('remark', '项目部'.__('Remark'));
+
+        // 关闭详情和删除按钮
+        $form->tools(function (Form\Tools $tools) {
+            $tools->disableView();
+            $tools->disableDelete();
+        });
         return $form;
     }
 }
