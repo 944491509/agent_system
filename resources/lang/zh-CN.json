@@ -14,5 +14,9 @@
     "Status" : "状态",
     "Level" : "等级",
     "Type" : "类别",
-    "Area" : "区域"
+    "Area" : "区域",
+    "Stand" : "项目部",
+    "Department": "部门",
+    "Require" : "岗位要求",
+    "BelongTo" : "岗位所属"
 }

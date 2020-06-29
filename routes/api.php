@@ -20,11 +20,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 // 获取地区的下级
 Route::group(['prefix'=> 'area'],function () {
-    Route::get('get-areas', 'Api\ChinaAreaController@getAreas')->name('api.area.get-areas');
+    Route::get('get-areas', 'Api\ChinaAreaController@getAreas')
+        ->name('api.area.get-areas');
 });
 
 
-// 获取项目部的上级
+// 项目部模块
 Route::group(['prefix'=> 'stand'],function () {
-    Route::get('get-parent-stand', 'Api\District\AreaStandController@getParentStand')->name('api.stand.get-parent-stand');
+    // 获取项目部的上级
+    Route::get('get-parent-stand', 'Api\District\AreaStandController@getParentStand')
+        ->name('api.stand.get-parent-stand');
+    // 获取项目部下的部门
+    Route::get('get-departments', 'Api\District\DepartmentController@getDepartmentByStandId')
+        ->name('api.stand.get-departments');
+
+
 });

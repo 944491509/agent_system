@@ -16,4 +16,18 @@ class AreaStandDao
         return AreaStand::all();
     }
 
+
+    /**
+     * 为options处理数据
+     * @return array
+     */
+    public function getAreaStandOption() {
+        $stands = $this->getAllAreaStand();
+        $areaStand = [];
+        foreach ($stands as $key => $val) {
+            $areaStand[$val['id']] = $val['name'];
+        }
+        return $areaStand;
+    }
+
 }
