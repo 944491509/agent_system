@@ -27,7 +27,9 @@ class DepartmentController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Department());
+        $grid->disableFilter();
 
+        $grid->quickSearch('name');
         $grid->column('area_stand_id', '所属项目部')->display(function($id) {
             return AreaStand::find($id)->name;
         });
@@ -77,6 +79,11 @@ class DepartmentController extends AdminController
         $form->text('group', '维护班组名称')->required();
         $form->number('rank', '等级')->rules('required|min:0|integer')->default(0);
 
+        // 关闭详情和删除按钮
+        $form->tools(function (Form\Tools $tools) {
+            $tools->disableView();
+            $tools->disableDelete();
+        });
         return $form;
     }
 }
