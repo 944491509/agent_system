@@ -19,6 +19,7 @@ class UpdateUserTableAddField extends Migration
             $table->integer('mobile')->comment('手机号1');
             $table->integer('phone')->nullable()->comment('手机号2');
             $table->integer('group_cornet')->nullable()->comment('集团短号');
+            $table->tinyInteger('type')->default(1)->comment('用户类型 1维护人员');
         });
     }
 
@@ -36,6 +37,7 @@ class UpdateUserTableAddField extends Migration
             $table->dropColumn('mobile');
             $table->dropColumn('phone');
             $table->dropColumn('group_cornet');
+            $table->dropColumn('type');
         });
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers\District;
 
 use App\Models\District\User;
+use Couchbase\Document;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -73,13 +74,30 @@ class UserController extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new User());
+        $form = new Form(new Document);
 
-        $form->text('name', __('Name'));
-        $form->email('email', __('Email'));
-        $form->datetime('email_verified_at', __('Email verified at'))->default(date('Y-m-d H:i:s'));
-        $form->password('password', __('Password'));
-        $form->text('remember_token', __('Remember token'));
+        // 第一列占据1/2的页面宽度
+        $form->column(1 / 2, function ($form) {
+
+            // 在这一列中加入表单项
+
+            $form->text('title', __('Title'))->rules('min:10');
+
+            $form->textarea('desc', __('Desc'))->required();
+
+            $form->file('path', __('Path'))->required();
+        });
+
+        // 第二列占据右边1/2的页面宽度
+        $form->column(1 / 2, function ($form) {
+            $form->number('view_count', __('View count'))->default(0);
+
+            $form->number('download_count', __('Download count'))->default(0);
+
+            $form->number('rate', __('Rate'))->default(0);
+
+            $form->datetimeRange('created_at', 'updated_at');
+        });
 
         return $form;
     }
