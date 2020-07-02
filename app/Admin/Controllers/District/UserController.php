@@ -2,12 +2,15 @@
 
 namespace App\Admin\Controllers\District;
 
+use App\Dao\District\AreaStandDao;
+use App\Models\ChinaArea;
+use App\Models\District\Department;
 use App\Models\District\User;
-use Couchbase\Document;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+
 
 class UserController extends AdminController
 {
@@ -74,31 +77,72 @@ class UserController extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new Document);
+        $form = new Form(new User());
 
-        // 第一列占据1/2的页面宽度
-        $form->column(1 / 2, function ($form) {
+        $directors = [
+            1 => '默认数据',
+        ];
 
-            // 在这一列中加入表单项
+        $dao = new AreaStandDao;
 
-            $form->text('title', __('Title'))->rules('min:10');
+        $areaDao = $dao->getAllAreaStand();
+        $area = $areaDao->pluck('name', 'id');
 
-            $form->textarea('desc', __('Desc'))->required();
+        $directors = [1111];
+        if ($form->isCreating()) {
 
-            $form->file('path', __('Path'))->required();
-        });
+            $form->column(1 / 2, function ($form) {
+                $form->text('name', '姓名')->required();
+                $form->text('number', '工号')->required();
+                $form->radio('gender', '性别')->options([
+                    User::GENDER_MAN => '男',
+                    User::GENDER_WOMAN => '女'
+                ])->default(User::GENDER_MAN)->required();
+                $form->select('education', '学历')->options(['学历'])->required();
+                $form->mobile('mobile', '手机号1')->required();
+                $form->mobile('phone', '手机号2');
+                $form->text('group_cornet', '集团短号');
+                $form->email('email', '邮箱');
+                $form->text('address', '家庭住址');
+                $form->text('id_number', '身份证号')->required();
+            });
 
-        // 第二列占据右边1/2的页面宽度
-        $form->column(1 / 2, function ($form) {
-            $form->number('view_count', __('View count'))->default(0);
+            $form->column(1 / 2, function ($form) use ($area, $directors) {
 
-            $form->number('download_count', __('Download count'))->default(0);
+                $form->select('area_stand_id', '所属项目部名称')->options(function () use ($area) {
+                    return $area;
+                })->load('department_id', '/api/stand/get-departments', 'id', 'name')->required();
 
-            $form->number('rate', __('Rate'))->default(0);
+                $form->select('department_id', '维护部门')->options(function ($id) {
+                    return Department::where('id', $id)->pluck('name', 'id');
+                })->required();
 
-            $form->datetimeRange('created_at', 'updated_at');
-        });
+                $form->select('group_id', '维护班组')->options($directors)->required();
+                $form->select('post_id', '维护岗位')->options($directors)->required();
+                $form->select('major_id', '维护专业')->options($directors)->required();
+                $form->date('entry_time', '入职日期')->format('YYYY-MM-DD')->required();
+                $form->date('signing_time', '签约日期')->format('YYYY-MM-DD');
+                $form->date('due_time', '合同到期日期')->format('YYYY-MM-DD');
+                $form->text('serial', '合同编号');
+                $form->textarea('note', '备注')->rows(5);
+            });
+        }
+
+        if ($form->isEditing()) {
+            $form->tab('技能信息', function ($form) {
+                $form->text('company')->required();
+                $form->date('start_date');
+                $form->date('end_date');
+            })->tab('附加信息', function ($form) {
+                $form->text('company');
+                $form->date('start_date');
+                $form->date('end_date');
+            });
+        }
+
 
         return $form;
     }
+
+
 }

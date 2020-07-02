@@ -33,6 +33,7 @@ Route::group(['prefix'=> 'stand'],function () {
     // 获取项目部下的部门
     Route::get('get-departments', 'Api\District\DepartmentController@getDepartmentByStandId')
         ->name('api.stand.get-departments');
-
+    // 所有项目部
+    Route::get('get-all-area-stand', 'Api\District\AreaStandController@getAllAreaStand');
 
 });

@@ -15,10 +15,13 @@ class CreatedUserProfilesTable extends Migration
     {
         Schema::create('user_profiles', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('user_id')->comment('用户ID');
             $table->string('number', 50)->nullable()->comment('工号');
+            $table->integer('education')->nullable()->comment('学历');
             $table->string('address', 100)->nullable()->comment('家庭住址');
             $table->string('id_number', 100)->comment('身份证号');
             $table->date('birthday')->nullable()->comment('生日');
+            $table->integer('area_stand_id')->comment('项目部ID');
             $table->integer('department_id')->comment('部门ID');
             $table->integer('group_id')->comment('班组ID');
             $table->integer('post_id')->comment('岗位ID');
