@@ -15,14 +15,18 @@ Route::group([
     $router->resource('area-stands', District\AreaStandController::class);
 
     //  区站基础管理
-    $router->group([
-        'prefix' => 'district',
-    ],function (Router $router) {
+    $router->group(['prefix' => 'district',],function (Router $router) {
         $router->resource('users', District\UserController::class);
         $router->resource('area-stands', District\AreaStandController::class);
         $router->resource('facilitators', District\FacilitatorsController::class);
         $router->resource('departments', District\DepartmentController::class);
         $router->resource('posts', District\PostController::class);
+    });
+
+    // 基础资料
+    $router->group(['prefix' => 'initialValue'], function (Router $router) {
+        $router->resource('professional-skills', InitialValue\ProfessionalSkillController::class);
+
     });
 
 });
