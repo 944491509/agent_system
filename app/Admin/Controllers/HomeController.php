@@ -10,6 +10,10 @@ use Encore\Admin\Layout\Row;
 
 class HomeController extends Controller
 {
+    /**
+     * @param Content $content
+     * @return Content
+     */
     public function index(Content $content)
     {
         return $content

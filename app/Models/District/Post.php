@@ -48,7 +48,6 @@ class Post extends Model
         return $this->belongsTo(AreaStand::class, 'stand_id');
     }
 
-
     /**
      * 部门
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

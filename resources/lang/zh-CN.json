@@ -18,5 +18,6 @@
     "Stand" : "项目部",
     "Department": "部门",
     "Require" : "岗位要求",
-    "BelongTo" : "岗位所属"
+    "BelongTo" : "岗位所属",
+    "professionalClasses" : "证书等级"
 }
