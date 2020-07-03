@@ -35,5 +35,11 @@ Route::group(['prefix'=> 'stand'],function () {
         ->name('api.stand.get-departments');
     // 所有项目部
     Route::get('get-all-area-stand', 'Api\District\AreaStandController@getAllAreaStand');
+    // 班组
+    Route::get('get-group', 'Api\District\AreaStandController@getGroup');
+    // 岗位
+    Route::get('get-post', 'Api\District\AreaStandController@getPost');
+    // 专业
+    Route::get('get-major', 'Api\District\AreaStandController@getMajor');
 
 });

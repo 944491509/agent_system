@@ -3,8 +3,13 @@
 namespace App\Admin\Controllers\District;
 
 use App\Dao\District\AreaStandDao;
+use App\Dao\District\MajorDao;
+use App\Dao\District\PostDao;
 use App\Models\ChinaArea;
 use App\Models\District\Department;
+use App\Models\District\Major;
+use App\Models\District\Post;
+use App\Models\District\TaskGroup;
 use App\Models\District\User;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -79,52 +84,59 @@ class UserController extends AdminController
     {
         $form = new Form(new User());
 
-        $directors = [
-            1 => '默认数据',
-        ];
-
         $dao = new AreaStandDao;
-
         $areaDao = $dao->getAllAreaStand();
         $area = $areaDao->pluck('name', 'id');
 
-        $directors = [1111];
+        $postDao = new postDao;
+        $postData = $postDao->getAllPost();
+        $posts = [];
+        foreach ($postData as $val) {
+            $posts[$val->id] = $val->name;
+        }
         if ($form->isCreating()) {
 
             $form->column(1 / 2, function ($form) {
                 $form->text('name', '姓名')->required();
-                $form->text('number', '工号')->required();
+                $form->text('profile.number', '工号')->required();
                 $form->radio('gender', '性别')->options([
                     User::GENDER_MAN => '男',
                     User::GENDER_WOMAN => '女'
                 ])->default(User::GENDER_MAN)->required();
-                $form->select('education', '学历')->options(['学历'])->required();
+                $form->select('profile.education', '学历')->options(['学历'])->required();
                 $form->mobile('mobile', '手机号1')->required();
                 $form->mobile('phone', '手机号2');
                 $form->text('group_cornet', '集团短号');
-                $form->email('email', '邮箱');
-                $form->text('address', '家庭住址');
-                $form->text('id_number', '身份证号')->required();
+                $form->email('profile.email', '邮箱');
+                $form->text('profile.address', '家庭住址');
+                $form->text('profile.id_number', '身份证号')->required();
             });
 
-            $form->column(1 / 2, function ($form) use ($area, $directors) {
+            $form->column(1 / 2, function ($form) use ($area, $posts) {
 
-                $form->select('area_stand_id', '所属项目部名称')->options(function () use ($area) {
+                $form->select('profile.area_stand_id', '所属项目部')->options(function () use ($area) {
                     return $area;
-                })->load('department_id', '/api/stand/get-departments', 'id', 'name')->required();
+                })->load('profile.department_id', '/api/stand/get-departments', 'id', 'name')->required();
 
-                $form->select('department_id', '维护部门')->options(function ($id) {
+                $form->select('profile.department_id', '维护部门')->options(function ($id) {
                     return Department::where('id', $id)->pluck('name', 'id');
+                })->load('profile.group_id', '/api/stand/get-group', 'id', 'name')->required();
+
+                $form->select('profile.group_id', '维护班组')->options(function ($id) {
+                    return TaskGroup::where('id', $id)->pluck('name', 'id');
                 })->required();
 
-                $form->select('group_id', '维护班组')->options($directors)->required();
-                $form->select('post_id', '维护岗位')->options($directors)->required();
-                $form->select('major_id', '维护专业')->options($directors)->required();
-                $form->date('entry_time', '入职日期')->format('YYYY-MM-DD')->required();
-                $form->date('signing_time', '签约日期')->format('YYYY-MM-DD');
-                $form->date('due_time', '合同到期日期')->format('YYYY-MM-DD');
-                $form->text('serial', '合同编号');
-                $form->textarea('note', '备注')->rows(5);
+                $form->select('profile.post_id', '维护岗位')->options($posts)->load('profile.major_id', '/api/stand/get-major', 'id', 'name')->required();
+
+                $form->select('profile.major_id', '维护专业')->options(function ($id) {
+                    return Major::where('id', $id)->pluck('name', 'id');
+                })->required();
+
+                $form->date('profile.entry_time', '入职日期')->format('YYYY-MM-DD')->required();
+                $form->date('profile.signing_time', '签约日期')->format('YYYY-MM-DD');
+                $form->date('profile.due_time', '合同到期日期')->format('YYYY-MM-DD');
+                $form->text('profile.serial', '合同编号');
+                $form->textarea('profile.note', '备注')->rows(5);
             });
         }
 

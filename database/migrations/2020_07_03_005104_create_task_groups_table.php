@@ -53,6 +53,6 @@ class CreateTaskGroupsTable extends Migration
         Schema::table('departments', function (Blueprint $table) {
             $table->string('group')->comment('维护班组管理');
         });
-        DB::table('admin_menu')->where('title','维护岗位管理')->delete();
+        DB::table('admin_menu')->where('title', '维护班组管理')->delete();
     }
 }
