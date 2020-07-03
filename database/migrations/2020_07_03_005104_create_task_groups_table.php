@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePostsTable extends Migration
+class CreateTaskGroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,32 +14,32 @@ class CreatePostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('task_groups', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('stand_id')->comment('项目部ID');
             $table->integer('department_id')->comment('部门ID');
-            $table->string('name', 30)->comment('岗位名称');
-            $table->text('explain')->comment('岗位说明')->nullable();
-            $table->text('require')->comment('岗位要求')->nullable();
-            $table->tinyInteger('level')->default(1)->comment('岗位级别');
-            $table->text('belong_to')->comment('岗位所属');
+            $table->string('name',30)->comment('班组名称');
             $table->timestamps();
         });
-        DB::statement(" ALTER TABLE posts comment '岗位表' ");
+        DB::statement(" ALTER TABLE task_groups comment '班组表' ");
+
+        Schema::table('departments', function (Blueprint $table) {
+            $table->dropColumn('group');
+        });
+
         $id = DB::table('admin_menu')->where('title', '区站基础资料')->value('id');
         $data = [
             [
                 'parent_id' => $id,
-                'order' => 4,
-                'title' => '维护岗位管理',
-                'icon' => 'fa-bars',
-                'uri' => 'district/posts',
+                'order' => 5,
+                'title' => '维护班组管理',
+                'icon' => 'fa-group',
+                'uri' => 'district/task-groups',
                 'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
                 'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
             ],
         ];
         DB::table('admin_menu')->insert($data);
-
     }
 
     /**
@@ -49,7 +49,10 @@ class CreatePostsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('task_groups');
+        Schema::table('departments', function (Blueprint $table) {
+            $table->string('group')->comment('维护班组管理');
+        });
         DB::table('admin_menu')->where('title','维护岗位管理')->delete();
     }
 }

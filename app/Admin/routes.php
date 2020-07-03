@@ -21,6 +21,7 @@ Route::group([
         $router->resource('facilitators', District\FacilitatorsController::class);
         $router->resource('departments', District\DepartmentController::class);
         $router->resource('posts', District\PostController::class);
+        $router->resource('task-groups', District\TaskGroupController::class);
     });
 
     // 基础资料

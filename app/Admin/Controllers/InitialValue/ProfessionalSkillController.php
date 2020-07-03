@@ -29,7 +29,7 @@ class ProfessionalSkillController extends AdminController
         $grid = new Grid(new ProfessionalSkill());
         $grid->column('id', __('Id'));
         $grid->column('name', __('Name'));
-        $grid->classes(__('professionalClasses'))->display(function ($class) {
+        $grid->column('classes',__('professionalClasses'))->display(function ($class) {
                 $res = array_map(function ($class) {
                     return "<span class='label label-success'>{$class['name']}</span>";
                 }, $class);

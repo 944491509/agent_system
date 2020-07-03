@@ -34,7 +34,6 @@ class DepartmentController extends AdminController
             return AreaStand::find($id)->name;
         });
         $grid->column('name','维护部门名称');
-        $grid->column('group' , '维护班组名称');
         $grid->column('rank', '等级');
 
         $grid->column('created_at');
@@ -76,7 +75,6 @@ class DepartmentController extends AdminController
         }
         $form->select('area_stand_id', '所属项目部')->options($areaStand);
         $form->text('name', '维护部门名称')->required();
-        $form->text('group', '维护班组名称')->required();
         $form->number('rank', '等级')->rules('required|min:0|integer')->default(0);
 
         // 关闭详情和删除按钮
