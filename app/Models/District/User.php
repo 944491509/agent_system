@@ -21,7 +21,7 @@ class User extends Authenticatable
         return $this->hasOne(UserProfile::class);
     }
 
-    public function major()
+    public function user_major()
     {
         return $this->hasOne(UserMajor::class, 'user_id', 'id');
     }

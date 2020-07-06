@@ -71,4 +71,17 @@ class UserProfile extends Model
     {
         return [1 => '是', 0 => '否'];
     }
+
+    public static function getAllEducation()
+    {
+        return [
+            '小学',
+            '初中',
+            '高中',
+            '专科',
+            '本科',
+            '硕士',
+            '博士'
+        ];
+    }
 }
