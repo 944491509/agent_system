@@ -12,6 +12,8 @@ use App\Models\District\Post;
 use App\Models\District\TaskGroup;
 use App\Models\District\User;
 use App\Models\District\UserProfile;
+use App\Models\InitialValue\ProfessionalClass;
+use App\Models\InitialValue\ProfessionalSkill;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -106,6 +108,8 @@ class UserController extends AdminController
         foreach ($postData as $val) {
             $posts[$val->id] = $val->name;
         }
+        $skill = ProfessionalSkill::all()->pluck('name', 'id');
+
         if ($form->isCreating()) {
 
             $form->column(1 / 2, function ($form) {
@@ -211,34 +215,32 @@ class UserController extends AdminController
                 })->required();
 
                 $form->textarea('profile.note', '备注')->rows(5);
-            })->tab('专业技能', function ($form) {
-//                $form->select('userMajor.major_id_one', '专业技能1')->options(function ($id) {
-//                    return Major::where('id', $id)->pluck('name', 'id');
-//                });
-//                $form->select('userMajor.major_level_one', '专业技能1 级别')->options(function ($id) {
-//                    return Major::where('id', $id)->pluck('name', 'id');
-//                });
-//                $form->select('userMajor.major_id_two', '专业技能2')->options(function ($id) {
-//                    return Major::where('id', $id)->pluck('name', 'id');
-//                });
-//                $form->select('userMajor.major_level_two', '专业技能2 级别')->options(function ($id) {
-//                    return Major::where('id', $id)->pluck('name', 'id');
-//                });
-//                $form->select('userMajor.major_id_three', '专业技能3')->options(function ($id) {
-//                    return Major::where('id', $id)->pluck('name', 'id');
-//                });
-//                $form->select('userMajor.major_level_three', '专业技能3 级别')->options(function ($id) {
-//                    return Major::where('id', $id)->pluck('name', 'id');
-//                });
-//                $form->select('userMajor.skill', '职业技能鉴定名称')->options(function ($id) {
-//                    return Major::where('id', $id)->pluck('name', 'id');
-//                });
-//                $form->select('userMajor.skill_type', '职业技能鉴定类别')->options(function ($id) {
-//                    return Major::where('id', $id)->pluck('name', 'id');
-//                });
-//                $form->select('userMajor.skill_level', '职业技能鉴定级别')->options(function ($id) {
-//                    return Major::where('id', $id)->pluck('name', 'id');
-//                });
+            })->tab('专业技能', function ($form)use ($skill) {
+
+                $form->select('userMajor.major_id_one', '专业技能1')->options($skill)
+                    ->load('userMajor.major_level_one', '/api/stand/get-major-classes', 'id', 'name');
+
+                $form->select('userMajor.major_level_one', '专业技能1 级别')->options(function ($id) {
+                    return ProfessionalClass::where('id', $id)->pluck('name', 'id');
+                });
+
+                $form->select('userMajor.major_id_two', '专业技能2')->options($skill)
+                    ->load('userMajor.major_level_two', '/api/stand/get-major-classes', 'id', 'name');
+
+                $form->select('userMajor.major_level_two', '专业技能2 级别')->options(function ($id) {
+                    return ProfessionalClass::where('id', $id)->pluck('name', 'id');
+                });
+
+                $form->select('userMajor.major_id_three', '专业技能3')->options($skill)
+                    ->load('userMajor.major_level_three', '/api/stand/get-major-classes', 'id', 'name');
+
+                $form->select('userMajor.major_level_three', '专业技能3 级别')->options(function ($id) {
+                    return ProfessionalClass::where('id', $id)->pluck('name', 'id');
+                });
+
+                $form->select('userMajor.skill', '职业技能鉴定名称')->options([]);
+                $form->select('userMajor.skill_type', '职业技能鉴定类别')->options([]);
+                $form->select('userMajor.skill_level', '职业技能鉴定级别')->options([]);
                 $form->text('userMajor.skill_num', '职业技能鉴定编号');
                 $form->date('userMajor.skill_time', '职业技能鉴定时间')->format('YYYY-MM-DD');
             });

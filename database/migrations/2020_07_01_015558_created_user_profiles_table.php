@@ -51,6 +51,7 @@ class CreatedUserProfilesTable extends Migration
             $table->string('note')->nullable()->comment('备注');
             $table->timestamps();
         });
+        DB::statement(" ALTER TABLE user_profiles comment '用户信息表' ");
     }
 
     /**

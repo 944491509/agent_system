@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\Controller;
 use App\Models\District\AreaStand;
 use App\Models\District\Department;
 use App\Models\District\Post;
+use App\Models\InitialValue\ProfessionalClass;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -69,9 +70,20 @@ class AreaStandController extends Controller
     public function getMajor(Request $request)
     {
         $id = $request->get('q');
-
         $dao = new MajorDao;
         $data = $dao->getMajorByPostId($id);
+        return response()->json($data);
+    }
+
+    /**
+     * 专业的等级
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getProfessionalClasses(Request $request)
+    {
+        $id = $request->get('q');
+        $data = ProfessionalClass::where('skill_id', $id)->get();
         return response()->json($data);
     }
 }

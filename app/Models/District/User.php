@@ -23,6 +23,6 @@ class User extends Authenticatable
 
     public function userMajor()
     {
-        return $this->hasMany(UserMajor::class, 'user_id', 'id');
+        return $this->hasOne(UserMajor::class, 'user_id', 'id');
     }
 }

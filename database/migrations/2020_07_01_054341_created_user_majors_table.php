@@ -29,6 +29,8 @@ class CreatedUserMajorsTable extends Migration
             $table->date('skill_time')->nullable()->comment('职业技能鉴定时间');
             $table->timestamps();
         });
+
+        DB::statement(" ALTER TABLE user_majors comment '用户技能表' ");
     }
 
     /**

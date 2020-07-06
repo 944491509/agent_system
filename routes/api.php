@@ -41,5 +41,7 @@ Route::group(['prefix'=> 'stand'],function () {
     Route::get('get-post', 'Api\District\AreaStandController@getPost');
     // 专业
     Route::get('get-major', 'Api\District\AreaStandController@getMajor');
+    // 专业的等级
+    Route::get('get-major-classes', 'Api\District\AreaStandController@getProfessionalClasses');
 
 });
