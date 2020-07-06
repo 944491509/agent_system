@@ -31,9 +31,11 @@ class TaskGroupController extends AdminController
         $grid->column('id', __('Id'));
         $grid->column('areaStand.name', __('Stand'));
         $grid->column('department.name', __('Department'));
-        $grid->column('name', '班组'.__('Name'));
+        $grid->column('name', '班组' . __('Name'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
+
+        $grid->disableFilter(); // 去掉筛选
         $grid->actions(function ($actions) {
             $actions->disableView(); // 去掉查看
             $actions->disableDelete(); // todo 暂时关闭删除 删除逻辑后需要修改

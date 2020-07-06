@@ -3,37 +3,26 @@
 namespace App\Models\District;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    const GENDER_MAN = 1;
+    const GENDER_WOMAN = 2;
+
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'gender', 'mobile', 'phone', 'group_cornet', 'type'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    public function profile()
+    {
+        return $this->hasOne(UserProfile::class);
+    }
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function user_major()
+    {
+        return $this->hasOne(UserMajor::class, 'user_id', 'id');
+    }
 }
