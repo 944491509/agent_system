@@ -217,24 +217,24 @@ class UserController extends AdminController
                 $form->textarea('profile.note', '备注')->rows(5);
             })->tab('专业技能', function ($form)use ($skill) {
 
-                $form->select('userMajor.major_id_one', '专业技能1')->options($skill)
+                $form->select('major.major_id_one', '专业技能1')->options($skill)
                     ->load('userMajor.major_level_one', '/api/stand/get-major-classes', 'id', 'name');
 
-                $form->select('userMajor.major_level_one', '专业技能1 级别')->options(function ($id) {
+                $form->select('major.major_level_one', '专业技能1 级别')->options(function ($id) {
                     return ProfessionalClass::where('id', $id)->pluck('name', 'id');
                 });
 
-                $form->select('userMajor.major_id_two', '专业技能2')->options($skill)
+                $form->select('major.major_id_two', '专业技能2')->options($skill)
                     ->load('userMajor.major_level_two', '/api/stand/get-major-classes', 'id', 'name');
 
-                $form->select('userMajor.major_level_two', '专业技能2 级别')->options(function ($id) {
+                $form->select('major.major_level_two', '专业技能2 级别')->options(function ($id) {
                     return ProfessionalClass::where('id', $id)->pluck('name', 'id');
                 });
 
-                $form->select('userMajor.major_id_three', '专业技能3')->options($skill)
+                $form->select('major.major_id_three', '专业技能3')->options($skill)
                     ->load('userMajor.major_level_three', '/api/stand/get-major-classes', 'id', 'name');
 
-                $form->select('userMajor.major_level_three', '专业技能3 级别')->options(function ($id) {
+                $form->select('major.major_level_three', '专业技能3 级别')->options(function ($id) {
                     return ProfessionalClass::where('id', $id)->pluck('name', 'id');
                 });
 
