@@ -85,8 +85,8 @@ class UserController extends AdminController
         $grid->column('mobile', '手机号1');
         $grid->column('phone', '手机号2');
         $grid->column('group_cornet', '集团短号');
-        $grid->column('profile.education', '学历');
-        $grid->column('updated_at', '生日');
+        $grid->column('profile.education', '学历')->using(UserProfile::getAllEducation());
+        $grid->column('profile.birthday', '生日');
         $grid->column('profile.id_number', '身份证号码');
 
         return $grid;
@@ -130,6 +130,7 @@ class UserController extends AdminController
                 $form->email('email', '邮箱');
                 $form->text('profile.address', '家庭住址');
                 $form->text('profile.id_number', '身份证号')->required();
+                $form->date('profile.birthday', '生日')->format('YYYY-MM-DD');
             });
 
             $form->column(1 / 2, function ($form) use ($area, $posts) {
@@ -175,6 +176,7 @@ class UserController extends AdminController
                 $form->email('email', '邮箱');
                 $form->text('profile.address', '家庭住址');
                 $form->text('profile.id_number', '身份证号')->required();
+                $form->date('profile.birthday', '生日')->format('YYYY-MM-DD');
                 $form->date('profile.entry_time', '入职日期')->format('YYYY-MM-DD')->required();
                 $form->date('profile.signing_time', '签约日期')->format('YYYY-MM-DD');
                 $form->date('profile.due_time', '合同到期日期')->format('YYYY-MM-DD');
