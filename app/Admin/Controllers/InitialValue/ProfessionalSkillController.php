@@ -38,11 +38,8 @@ class ProfessionalSkillController extends AdminController
         });
 
         $grid->actions(function ($actions) {
-            $actions->disableView(); // 去掉查看
             $actions->disableDelete(); // todo 暂时关闭删除 删除逻辑后需要修改
         });
-
-
         return $grid;
     }
 
@@ -77,11 +74,6 @@ class ProfessionalSkillController extends AdminController
             $form->text('name', __('Name'));
         });
 
-        // 关闭详情和删除按钮
-        $form->tools(function (Form\Tools $tools) {
-            $tools->disableView();
-            $tools->disableDelete();
-        });
         return $form;
     }
 

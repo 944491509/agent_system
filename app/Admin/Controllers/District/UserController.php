@@ -39,11 +39,36 @@ class UserController extends AdminController
     {
         $grid = new Grid(new User());
 
-//        $grid->column('areaStand.', '维护地市');
+        $grid->quickSearch('name', 'mobile', 'phone')->placeholder('搜索 名字 手机号');
+        $dao = new AreaStandDao;
+        $areaDao = $dao->getAllAreaStand();
+        $area = $areaDao->pluck('name', 'id');
+        $postDao = new postDao;
+        $postData = $postDao->getAllPost();
+        $posts = [];
+        foreach ($postData as $val) {
+            $posts[$val->id] = $val->name;
+        }
+
+        $grid->filter(function ($filter) use ($area, $posts) {
+
+            // 去掉默认的id过滤器
+            $filter->disableIdFilter();
+            $filter->column(1 / 3, function ($filter) use ($area) {
+                $filter->equal('profile.area_stand_id', '项目部')->select($area)->load('profile.department_id', '/api/stand/get-departments', 'id', 'name');
+                $filter->equal('profile.department_id', '部门')->select()->load('profile.group_id', '/api/stand/get-group', 'id', 'name');
+            });
+
+            $filter->column(1 / 3, function ($filter) use ($posts) {
+                $filter->equal('profile.group_id', '班组')->select()->load('profile.major_id', '/api/stand/get-major', 'id', 'name');
+                $filter->equal('profile.post_id', '岗位')->select($posts);
+            });
+        });
+
         $grid->column('area_stand_id', '项目部')->display(function () {
             return $this->profile->areaStand->name;
         });
-        $grid->column('profile.department.name', '部门')->display(function () {
+        $grid->column('department_id', '部门')->display(function () {
             return $this->profile->department->name;
         });
         $grid->column('group_id', '班组')->display(function () {
@@ -67,27 +92,6 @@ class UserController extends AdminController
         return $grid;
     }
 
-    /**
-     * Make a show builder.
-     *
-     * @param mixed $id
-     * @return Show
-     */
-    protected function detail($id)
-    {
-        $show = new Show(User::findOrFail($id));
-
-        $show->field('id', __('Id'));
-        $show->field('name', __('Name'));
-        $show->field('email', __('Email'));
-        $show->field('email_verified_at', __('Email verified at'));
-        $show->field('password', __('Password'));
-        $show->field('remember_token', __('Remember token'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
-
-        return $show;
-    }
 
     /**
      * Make a form builder.

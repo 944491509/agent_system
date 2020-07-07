@@ -29,19 +29,12 @@ class DepartmentController extends AdminController
         $grid = new Grid(new Department());
         $grid->disableFilter();
 
-        $grid->quickSearch('name');
-        $grid->column('area_stand_id', '所属项目部')->display(function($id) {
+        $grid->quickSearch('name')->placeholder('搜索 部门名称');
+        $grid->column('area_stand_id', '所属项目部')->display(function ($id) {
             return AreaStand::find($id)->name;
         });
         $grid->column('name','维护部门名称');
         $grid->column('rank', '等级');
-
-        $grid->column('created_at');
-
-        $grid->actions(function ($actions) {
-            // 去掉查看
-            $actions->disableView();
-        });
 
         return $grid;
     }
@@ -77,11 +70,6 @@ class DepartmentController extends AdminController
         $form->text('name', '维护部门名称')->required();
         $form->number('rank', '等级')->rules('required|min:0|integer')->default(0);
 
-        // 关闭详情和删除按钮
-        $form->tools(function (Form\Tools $tools) {
-            $tools->disableView();
-            $tools->disableDelete();
-        });
         return $form;
     }
 }

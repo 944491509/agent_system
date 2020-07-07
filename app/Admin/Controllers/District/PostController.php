@@ -40,7 +40,6 @@ class PostController extends AdminController
 
         $grid->disableFilter(); // 去掉筛选
         $grid->actions(function ($actions) {
-            $actions->disableView(); // 去掉查看
             $actions->disableDelete(); // todo 暂时关闭删除 删除逻辑后需要修改
         });
 
@@ -65,12 +64,6 @@ class PostController extends AdminController
         $form->textarea('require', __('Require'));
         $form->textarea('explain', __('Explain'));
         $form->number('level', __('Level'))->default(1)->required();
-
-        // 关闭详情和删除按钮
-        $form->tools(function (Form\Tools $tools) {
-            $tools->disableView();
-            $tools->disableDelete();
-        });
         return $form;
     }
 }

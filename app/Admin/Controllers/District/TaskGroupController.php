@@ -37,7 +37,6 @@ class TaskGroupController extends AdminController
 
         $grid->disableFilter(); // 去掉筛选
         $grid->actions(function ($actions) {
-            $actions->disableView(); // 去掉查看
             $actions->disableDelete(); // todo 暂时关闭删除 删除逻辑后需要修改
         });
 
@@ -85,12 +84,6 @@ class TaskGroupController extends AdminController
             return Department::where('id', $id)->pluck('name', 'id');
         })->required();
         $form->text('name', '班组'.__('Name'))->required();
-
-        // 关闭详情和删除按钮
-        $form->tools(function (Form\Tools $tools) {
-            $tools->disableView();
-            $tools->disableDelete();
-        });
 
         return $form;
     }
