@@ -50,7 +50,6 @@ class MajorController extends AdminController
         $grid->column('updated_at', __('Updated at'));
 
         $grid->actions(function ($actions) {
-            $actions->disableView(); // 去掉查看
             $actions->disableDelete(); // todo 暂时关闭删除 删除逻辑后需要修改
         });
 
@@ -89,12 +88,6 @@ class MajorController extends AdminController
         }
         $form->select('post_id', '所属岗位')->options($data)->required();
         $form->text('name', '专业名称');
-
-        // 关闭详情和删除按钮
-        $form->tools(function (Form\Tools $tools) {
-            $tools->disableView();
-            $tools->disableDelete();
-        });
 
         return $form;
     }
