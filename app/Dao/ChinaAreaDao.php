@@ -35,4 +35,14 @@ class ChinaAreaDao
         return ChinaArea::where($map)->first();
     }
 
+
+    /**
+     * 获取地区
+     * @param $codeArr
+     * @return mixed
+     */
+    public function getAreasByCodeArr($codeArr) {
+        return ChinaArea::whereIn('code',$codeArr)->get();
+    }
+
 }

@@ -30,6 +30,8 @@ Route::group(['prefix'=> 'stand'],function () {
     // 获取项目部的上级
     Route::get('get-parent-stand', 'Api\District\AreaStandController@getParentStand')
         ->name('api.stand.get-parent-stand');
+    // 获取当前城市下的项目部
+    Route::get('get-city-stand', 'Api\District\AreaStandController@getCityStand');
     // 获取项目部下的部门
     Route::get('get-departments', 'Api\District\DepartmentController@getDepartmentByStandId')
         ->name('api.stand.get-departments');
