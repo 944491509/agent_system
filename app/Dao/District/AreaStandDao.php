@@ -46,7 +46,7 @@ class AreaStandDao
         $data = $chinaAreaDao->getAreasByCodeArr($cityId);
         $area = [];
         foreach ($data as $key => $val) {
-            $area[$val['id']] = $val['name'];
+            $area[$val['code']] = $val['name'];
         }
         return $area;
     }

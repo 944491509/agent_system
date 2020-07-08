@@ -31,8 +31,8 @@ class CreateAutomobilesTable extends Migration
             $table->integer('city_id')->comment('地市');
             $table->integer('stand_id')->comment('项目部ID');
             $table->integer('user_id')->comment('驾驶员');
-            $table->tinyInteger('nature')->comment('车辆性质 1:自由 2:租赁');
-            $table->tinyInteger('use')->comment('车辆用途 1:维护 2:工程 3:发点');
+            $table->tinyInteger('nature')->comment('车辆性质 1:自有 2:租赁');
+            $table->tinyInteger('use')->comment('车辆用途 1:维护 2:工程 3:发电');
             $table->date('bought_at')->comment('购入时间');
             $table->timestamps();
         });

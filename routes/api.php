@@ -45,5 +45,7 @@ Route::group(['prefix'=> 'stand'],function () {
     Route::get('get-major', 'Api\District\AreaStandController@getMajor');
     // 专业的等级
     Route::get('get-major-classes', 'Api\District\AreaStandController@getProfessionalClasses');
+    // 获取当前项目部下的司机
+    Route::get('get-driver-stand', 'Api\District\UserController@getDriverByStandId');
 
 });

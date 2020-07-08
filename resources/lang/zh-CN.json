@@ -33,5 +33,6 @@
     "Loads" : "载重",
     "Nature" : "车辆性质",
     "Use" : "车辆用途",
-    "Bought at" : "购入时间"
+    "Bought at" : "购入时间",
+    "Driver" : "驾驶员"
 }

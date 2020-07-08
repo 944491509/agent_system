@@ -2,11 +2,11 @@
 
 namespace App\Admin\Controllers\District;
 
-use App\Dao\District\AreaStandDao;
-use App\Models\ChinaArea;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
-use Encore\Admin\Show;
+use App\Models\District\User;
+use App\Dao\District\AreaStandDao;
+use App\Models\District\AreaStand;
 use App\Models\District\Automobile;
 use Encore\Admin\Controllers\AdminController;
 
@@ -17,7 +17,7 @@ class AutomobileController extends AdminController
      *
      * @var string
      */
-    protected $title = 'Automobile';
+    protected $title = '维护车辆';
 
     /**
      * Make a grid builder.
@@ -29,27 +29,22 @@ class AutomobileController extends AdminController
         $grid = new Grid(new Automobile());
         $grid->column('id', __('Id'));
         $grid->column('number', __('Number'));
-        $grid->column('explain', __('Explain'));
-        $grid->column('type', __('Type'));
-        $grid->column('manufacturers', __('Manufacturers'));
-        $grid->column('model', __('Model'));
-        $grid->column('displacement', __('Displacement'));
+        $grid->column('type', __('Type'))->display(function () {
+            return $this->typeText();
+        });
         $grid->column('bought_company', __('Bought company'));
         $grid->column('car_owner', __('Car owner'));
-        $grid->column('price', __('Price'));
-        $grid->column('oil_wear', __('Oil wear'));
-        $grid->column('engine_num', __('Engine num'));
-        $grid->column('vin', __('Vin'));
-        $grid->column('loads', __('Load'));
-        $grid->column('city_id', __('City id'));
-        $grid->column('stand_id', __('Stand id'));
-        $grid->column('user_id', __('User id'));
-        $grid->column('nature', __('Nature'));
-        $grid->column('use', __('Use'));
+        $grid->column('city.name', __('City'));
+        $grid->column('stand.name', __('Stand'));
+        $grid->column('driver.name', __('Driver'));
+        $grid->column('nature', __('Nature'))->display(function () {
+            return $this->natureText();
+        });
+        $grid->column('use', __('Use'))->display(function () {
+            return $this->useText();
+        });
         $grid->column('bought_at', __('Bought at'));
         $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
-
         return $grid;
     }
 
@@ -65,6 +60,8 @@ class AutomobileController extends AdminController
         $automobile = new Automobile();
         $areaStandDao = new AreaStandDao();
         $area = $areaStandDao->getAreaStandCity();
+        $nature = $automobile->allNature();
+        $use= $automobile->allUse();
         $form = new Form($automobile);
         $type = $automobile->allCatType();
         $form->text('number', __('Number'));
@@ -75,18 +72,21 @@ class AutomobileController extends AdminController
         $form->text('displacement', __('Displacement'));
         $form->text('bought_company', __('Bought company'));
         $form->text('car_owner', __('Car owner'));
-        $form->decimal('price', '购买'.__('Price'));
+        $form->currency('price', '购买'.__('Price'))->symbol('￥');
         $form->text('oil_wear', __('Oil wear'));
         $form->text('engine_num', __('Engine num'));
         $form->text('vin', __('Vin'));
         $form->text('loads', __('Loads'));
-        $form->select('city_id', __('City'))->options($area)->load('stand_id','/api/stand/get-city-stand');;
+        $form->select('city_id', __('City'))->options($area)
+            ->load('stand_id','/api/stand/get-city-stand','id', 'name');
         $form->select('stand_id', __('Stand'))->options(function ($id) {
-            return ChinaArea::where('id', $id)->pluck('name', 'code'); // 回显
+            return AreaStand::where('id', $id)->pluck('name', 'id'); // 回显
+        })->load('user_id', '/api/stand/get-driver-stand', 'id', 'name');
+        $form->select('user_id', __('Driver'))->options(function ($id) {
+            return User::where('id', $id)->pluck('name', 'id'); // 回显
         });
-        $form->number('user_id', '驾驶员');
-        $form->switch('nature', __('Nature'));
-        $form->switch('use', __('Use'));
+        $form->select('nature', __('Nature'))->options($nature);
+        $form->select('use', __('Use'))->options($use);
         $form->date('bought_at', __('Bought at'))->default(date('Y-m-d'));
 
         return $form;

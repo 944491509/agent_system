@@ -37,7 +37,7 @@ class AreaStandController extends Controller
     public function getCityStand(Request $request)
     {
         $code = $request->get('q');
-        $map = ['code' => $code];
+        $map = ['city_id' => $code];
         return AreaStand::where($map)->get();
 
     }
