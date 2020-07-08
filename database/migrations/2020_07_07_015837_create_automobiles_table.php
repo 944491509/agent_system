@@ -28,7 +28,6 @@ class CreateAutomobilesTable extends Migration
             $table->string('engine_num',100)->comment('发动机号')->nullable();
             $table->string('vin',100)->comment('车架号')->nullable();
             $table->string('loads',20)->comment('载重')->nullable();
-            $table->integer('city_id')->comment('地市');
             $table->integer('stand_id')->comment('项目部ID');
             $table->integer('user_id')->comment('驾驶员');
             $table->tinyInteger('nature')->comment('车辆性质 1:自有 2:租赁');
