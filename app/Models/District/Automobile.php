@@ -37,8 +37,8 @@ class Automobile extends Model
      */
     protected $fillable = [
         'number', 'explain', 'type', 'manufacturers', 'model', 'displacement', 'bought_company',
-        'car_owner', 'price', 'oil_wear', 'engine_num', 'vin', 'loads', 'city_id', 'stand_id',
-        'user_id', 'nature', 'use', 'bought_at', 'created_at', 'updated_at'
+        'car_owner', 'price', 'oil_wear', 'engine_num', 'vin', 'loads', 'stand_id', 'user_id',
+        'nature', 'use', 'bought_at', 'created_at', 'updated_at'
     ];
 
     const PASSENGER_CAR = 1;
@@ -147,15 +147,6 @@ class Automobile extends Model
      */
     public function driver() {
         return $this->belongsTo(User::class, 'user_id');
-    }
-
-
-    /**
-     * 城市
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function city() {
-        return $this->belongsTo(ChinaArea::class, 'city_id', 'code');
     }
 
 
