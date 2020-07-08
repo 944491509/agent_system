@@ -26,7 +26,28 @@ class AutomobileController extends AdminController
      */
     protected function grid()
     {
-        $grid = new Grid(new Automobile());
+        $model = new Automobile();
+        $types = $model->allCatType();
+        $natures = $model->allNature();
+        $uses = $model->allUse();
+        $areaStandDao = new AreaStandDao();
+        $stands = $areaStandDao->getAreaStandOption();
+        $grid = new Grid($model);
+        // 去掉默认的id过滤器
+        $grid->filter(function($filter) use ($types, $natures, $stands, $uses){
+            $filter->disableIdFilter();
+            $filter->column(1/2, function ($filter) use($types, $uses){
+                $filter->like('number',  __('Number'));
+                $filter->in('type', __('Type'))->multipleSelect($types);
+                $filter->in('use', __('Use'))->multipleSelect($uses);
+            });
+            $filter->column(1/2, function ($filter) use($natures, $stands){
+                $filter->in('nature', __('Nature'))->multipleSelect($natures);
+                $filter->in('stand_id', __('Stand'))->multipleSelect($stands);
+
+            });
+
+        });
         $grid->column('id', __('Id'));
         $grid->column('number', __('Number'));
         $grid->column('type', __('Type'))->display(function () {
@@ -58,31 +79,43 @@ class AutomobileController extends AdminController
     {
         $automobile = new Automobile();
         $areaStandDao = new AreaStandDao();
-        $area = $areaStandDao->getAreaStandCity();
+        $stands = $areaStandDao->getAreaStandOption();
         $nature = $automobile->allNature();
         $use= $automobile->allUse();
         $form = new Form($automobile);
         $type = $automobile->allCatType();
-        $form->text('number', __('Number'));
-        $form->textarea('explain', '车辆'.__('Explain'));
-        $form->select('type', __('Type'))->options($type);
-        $form->text('manufacturers', __('Manufacturers'));
-        $form->text('model', '车辆'.__('Model'));
-        $form->text('displacement', __('Displacement'));
-        $form->text('bought_company', __('Bought company'));
-        $form->text('car_owner', __('Car owner'));
-        $form->currency('price', '购买'.__('Price'))->symbol('￥');
-        $form->text('oil_wear', __('Oil wear'));
-        $form->text('engine_num', __('Engine num'));
-        $form->text('vin', __('Vin'));
-        $form->text('loads', __('Loads'));
-        $form->select('stand_id', __('Stand'))->options()->load('user_id', '/api/stand/get-driver-stand', 'id', 'name');
-        $form->select('user_id', __('Driver'))->options(function ($id) {
-            return User::where('id', $id)->pluck('name', 'id'); // 回显
+        $form->column(1/2, function ($form) use ($type, $stands, $nature, $use){
+            $form->text('number', __('Number'));
+            $form->select('type', __('Type'))->options($type);
+            $form->select('stand_id', __('Stand'))->options($stands)
+                ->load('user_id', '/api/stand/get-driver-stand', 'id', 'name');
+            $form->select('user_id', __('Driver'))->options(function ($id) {
+                return User::where('id', $id)->pluck('name', 'id'); // 回显
+            });
+
+            $form->select('nature', __('Nature'))->options($nature);
+            $form->select('use', __('Use'))->options($use);
+            $form->date('bought_at', __('Bought at'))->default(date('Y-m-d'));
+            $form->text('car_owner', __('Car owner'));
+            $form->currency('price', '购买'.__('Price'))->symbol('￥');
+            $form->text('manufacturers', __('Manufacturers'));
         });
-        $form->select('nature', __('Nature'))->options($nature);
-        $form->select('use', __('Use'))->options($use);
-        $form->date('bought_at', __('Bought at'))->default(date('Y-m-d'));
+
+        $form->column(1/2, function ($form) {
+            $form->text('model', '车辆'.__('Model'));
+            $form->text('displacement', __('Displacement'));
+            $form->text('bought_company', __('Bought company'));
+            $form->text('oil_wear', __('Oil wear'));
+            $form->text('engine_num', __('Engine num'));
+            $form->text('vin', __('Vin'));
+            $form->text('loads', __('Loads'));
+            $form->textarea('explain', '车辆'.__('Explain'));
+        });
+
+
+
+
+
 
         return $form;
     }
