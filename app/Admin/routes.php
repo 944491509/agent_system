@@ -25,6 +25,7 @@ Route::group([
         $router->resource('task-groups', District\TaskGroupController::class);
         $router->resource('majors', District\MajorController::class);
         $router->resource('automobiles', District\AutomobileController::class);
+        $router->resource('instruments', District\InstrumentController::class);
     });
 
     // 基础资料
