@@ -24,6 +24,7 @@ Route::group([
         $router->resource('posts', District\PostController::class);
         $router->resource('task-groups', District\TaskGroupController::class);
         $router->resource('majors', District\MajorController::class);
+        $router->resource('automobiles', District\AutomobileController::class);
     });
 
     // 基础资料

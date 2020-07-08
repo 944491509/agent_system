@@ -28,6 +28,20 @@ class AreaStandController extends Controller
         return AreaStand::where($map)->select($field)->get();
     }
 
+
+    /**
+     * 获取城市下的项目部
+     * @param Request $request
+     * @return mixed
+     */
+    public function getCityStand(Request $request)
+    {
+        $code = $request->get('q');
+        $map = ['city_id' => $code];
+        return AreaStand::where($map)->get();
+
+    }
+
     /**
      * 获取所有项目部
      * @return \Illuminate\Http\JsonResponse|Response

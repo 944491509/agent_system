@@ -19,5 +19,20 @@
     "Department": "部门",
     "Require" : "岗位要求",
     "BelongTo" : "岗位所属",
-    "professionalClasses" : "证书等级"
+    "professionalClasses" : "证书等级",
+    "Number" : "车牌号码",
+    "Manufacturers" : "车辆厂家",
+    "Model" : "型号",
+    "Displacement" : "车辆排量",
+    "Bought company" : "购入单位",
+    "Car owner" : "车主",
+    "Price" : "价格",
+    "Oil wear" : "日常油耗",
+    "Engine num" : "发动机号",
+    "Vin" : "车架号",
+    "Loads" : "载重",
+    "Nature" : "车辆性质",
+    "Use" : "车辆用途",
+    "Bought at" : "购入时间",
+    "Driver" : "驾驶员"
 }
