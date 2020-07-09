@@ -32,10 +32,8 @@ class AreaStandController extends AdminController
         $areaStand = new AreaStand();
         $grid = new Grid(new AreaStand());
         $grid->filter(function($filter) use($areaStand) {
-
             // 去掉默认的id过滤器
             $filter->disableIdFilter();
-
             // 在这里添加字段过滤器
             $filter->column(1/2, function ($filter) use ($areaStand){
                 $filter->like('name', '项目部'.__('Name'));
@@ -47,10 +45,8 @@ class AreaStandController extends AdminController
                 $filter->equal('level','项目部'.__('Level'))->select($areaStand->getAllLevel());
                 $filter->like('type','项目部'.__('Type'))->select($areaStand->getAllType());
             });
-
-
-
         });
+
         $grid->column('id', __('Id'));
         $grid->column('name', '项目部'.__('Name'));
         $grid->column('level', '项目部'.__('Level'))->display(function () {
