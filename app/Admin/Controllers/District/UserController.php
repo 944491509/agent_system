@@ -197,9 +197,9 @@ class UserController extends AdminController
                 $form->radio('profile.vehicle_card', '是否有车辆行驶证')->options(UserProfile::whether())->default(0);
                 $form->date('profile.get_vehicle_card_time', '车辆行驶证初领时间')->format('YYYY-MM-DD');
                 $form->text('profile.vehicle_model', '准假车型');
-                $form->text('profile.vehicle_model', '驾照编号');
-                $form->date('profile.vehicle_model', '驾照年审时间')->format('YYYY-MM-DD');
-                $form->date('profile.vehicle_model', '下次驾照年审时间')->format('YYYY-MM-DD');
+                $form->text('profile.vehicle_card_num', '驾照编号');
+                $form->date('profile.vehicle_card_audit_time', '驾照年审时间')->format('YYYY-MM-DD');
+                $form->date('profile.next_vehicle_card_audit_time', '下次驾照年审时间')->format('YYYY-MM-DD');
             })->tab('部门信息', function ($form) use ($area, $posts) {
 
                 $form->select('profile.area_stand_id', '所属项目部')->options(function () use ($area) {
