@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers\District;
 
+use App\Dao\District\AreaStandDao;
 use App\Models\District\Instrument;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -15,7 +16,7 @@ class InstrumentController extends AdminController
      *
      * @var string
      */
-    protected $title = 'Instrument';
+    protected $title = '仪器管理';
 
     /**
      * Make a grid builder.
@@ -25,16 +26,18 @@ class InstrumentController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Instrument());
+        $grid->disableFilter(); // 去掉筛选
+        $grid->quickSearch('name')->placeholder('搜索 仪器名称');
+        $grid->column('area_stand_id', '项目部')->display(function () {
+            return $this->areaStand->name;
+        });
 
-        $grid->column('id', __('Id'));
-        $grid->column('area_stand_id', __('Area stand id'));
-        $grid->column('name', __('Name'));
-        $grid->column('model', __('Model'));
-        $grid->column('number', __('Number'));
-        $grid->column('unit', __('Unit'));
-        $grid->column('factory', __('Factory'));
+        $grid->column('name', '仪器名称');
+        $grid->column('model', '型号');
+        $grid->column('number', '数量');
+        $grid->column('unit', '仪器单位');
+        $grid->column('factory', '生产厂家');
         $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
 
         return $grid;
     }
@@ -70,13 +73,16 @@ class InstrumentController extends AdminController
     protected function form()
     {
         $form = new Form(new Instrument());
+        $dao = new AreaStandDao;
+        $areaDao = $dao->getAllAreaStand();
+        $area = $areaDao->pluck('name', 'id');
 
-        $form->number('area_stand_id', __('Area stand id'));
-        $form->text('name', __('Name'));
-        $form->text('model', __('Model'));
-        $form->number('number', __('Number'))->default(1);
-        $form->text('unit', __('Unit'));
-        $form->text('factory', __('Factory'));
+        $form->select('area_stand_id', '所属项目部')->options($area)->required();
+        $form->text('name', '仪器名称')->required();
+        $form->text('model', __('Model'))->required();
+        $form->number('number', '数量')->default(1)->min(1);
+        $form->text('unit', '维护仪器单位');
+        $form->text('factory', '生产厂家');
 
         return $form;
     }

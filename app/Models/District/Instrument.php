@@ -29,4 +29,11 @@ class Instrument extends Model
      */
     protected $fillable = ['area_stand_id', 'name', 'model', 'number', 'unit', 'factory', 'created_at', 'updated_at'];
 
+
+    public function areaStand()
+    {
+        return $this->belongsTo(AreaStand::class);
+    }
+
+
 }
