@@ -77,6 +77,13 @@ return [
             'visibility' => 'public',
             'url' => env('APP_URL') . '/storage',
         ],
+        // 汽车图片
+        'automobile' => [
+            'driver'     => 'local',
+            'root'       => storage_path('app/public/automobile'),
+            'visibility' => 'public',
+            'url' => env('APP_URL').'/storage',
+        ],
 
     ],
 
