@@ -37,6 +37,18 @@ class InstrumentController extends AdminController
         $grid->column('number', '数量');
         $grid->column('unit', '仪器单位');
         $grid->column('factory', '生产厂家');
+        $grid->column('serial_number', '资产序列号');
+        $grid->column('attributes', '资产属性')->using(Instrument::buyAttribute());
+        $grid->column('purchase_time', '购买时间');
+
+        $grid->column('money', '购买金额')->display(function () {
+            if (empty($this->money)) {
+                return '';
+            } else {
+                return $this->money . '  元';
+            }
+        });
+        $grid->column('tag', '标签');
         $grid->column('created_at', __('Created at'));
 
         return $grid;
@@ -88,13 +100,13 @@ class InstrumentController extends AdminController
         $form->column(1 / 2, function ($form) use ($area) {
             $form->text('serial_number', '资产序列号')->required();
             $form->radio('attributes', '资产属性')->options(Instrument::buyAttribute())->default(Instrument::PURCHASE)->required();
+            $form->currency('money', '购买金额')->symbol('￥')->required();
             $form->date('purchase_time', '购买时间')->required();
             $form->text('tag', '资产标签')->required();
             $form->multipleImage('images', '资产图片')
                 ->pathColumn('path')
                 ->move('instrument')
                 ->help('上传多张图片 请在选择图片时按住 ctrl ')
-                ->required()
                 ->removable();
         });
         return $form;
