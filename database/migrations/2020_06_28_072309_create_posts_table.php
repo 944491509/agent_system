@@ -32,7 +32,7 @@ class CreatePostsTable extends Migration
                 'parent_id' => $id,
                 'order' => 4,
                 'title' => '岗位管理',
-                'icon' => 'fa-bars',
+                'icon' => 'fa-steam',
                 'uri' => 'district/posts',
                 'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
                 'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),

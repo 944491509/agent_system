@@ -40,7 +40,7 @@ class CreateFacilitatorMenusTable extends Migration
                 'parent_id' => $id,
                 'order' => 0,
                 'title' => '服务商',
-                'icon' => 'fa-bars',
+                'icon' => 'fa-jsfiddle',
                 'uri' => 'district/facilitators',
                 'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
                 'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),

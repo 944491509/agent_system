@@ -139,17 +139,17 @@ class UserController extends AdminController
                     return $area;
                 })->load('profile.department_id', '/api/stand/get-departments', 'id', 'name')->required();
 
-                $form->select('profile.department_id', '维护部门')->options(function ($id) {
+                $form->select('profile.department_id', '部门')->options(function ($id) {
                     return Department::where('id', $id)->pluck('name', 'id');
                 })->load('profile.group_id', '/api/stand/get-group', 'id', 'name')->required();
 
-                $form->select('profile.group_id', '维护班组')->options(function ($id) {
+                $form->select('profile.group_id', '班组')->options(function ($id) {
                     return TaskGroup::where('id', $id)->pluck('name', 'id');
                 })->required();
 
-                $form->select('profile.post_id', '维护岗位')->options($posts)->load('profile.major_id', '/api/stand/get-major', 'id', 'name')->required();
+                $form->select('profile.post_id', '岗位')->options($posts)->load('profile.major_id', '/api/stand/get-major', 'id', 'name')->required();
 
-                $form->select('profile.major_id', '维护专业')->options(function ($id) {
+                $form->select('profile.major_id', '专业')->options(function ($id) {
                     return Major::where('id', $id)->pluck('name', 'id');
                 })->required();
 
@@ -206,17 +206,17 @@ class UserController extends AdminController
                     return $area;
                 })->load('profile.department_id', '/api/stand/get-departments', 'id', 'name')->required();
 
-                $form->select('profile.department_id', '维护部门')->options(function ($id) {
+                $form->select('profile.department_id', '部门')->options(function ($id) {
                     return Department::where('id', $id)->pluck('name', 'id');
                 })->load('profile.group_id', '/api/stand/get-group', 'id', 'name')->required();
 
-                $form->select('profile.group_id', '维护班组')->options(function ($id) {
+                $form->select('profile.group_id', '班组')->options(function ($id) {
                     return TaskGroup::where('id', $id)->pluck('name', 'id');
                 })->required();
 
-                $form->select('profile.post_id', '维护岗位')->options($posts)->load('profile.major_id', '/api/stand/get-major', 'id', 'name')->required();
+                $form->select('profile.post_id', '岗位')->options($posts)->load('profile.major_id', '/api/stand/get-major', 'id', 'name')->required();
 
-                $form->select('profile.major_id', '维护专业')->options(function ($id) {
+                $form->select('profile.major_id', '专业')->options(function ($id) {
                     return Major::where('id', $id)->pluck('name', 'id');
                 })->required();
 

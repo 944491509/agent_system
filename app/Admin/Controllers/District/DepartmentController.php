@@ -33,7 +33,7 @@ class DepartmentController extends AdminController
         $grid->column('area_stand_id', '所属项目部')->display(function ($id) {
             return AreaStand::find($id)->name;
         });
-        $grid->column('name','维护部门名称');
+        $grid->column('name', '部门名称');
         $grid->column('rank', '等级');
 
         return $grid;
@@ -67,7 +67,7 @@ class DepartmentController extends AdminController
             $areaStand[$val['id']] = $val['name'];
         }
         $form->select('area_stand_id', '所属项目部')->options($areaStand);
-        $form->text('name', '维护部门名称')->required();
+        $form->text('name', '部门名称')->required();
         $form->number('rank', '等级')->rules('required|min:0|integer')->default(0);
 
         return $form;

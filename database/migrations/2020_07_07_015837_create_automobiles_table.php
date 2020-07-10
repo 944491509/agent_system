@@ -25,9 +25,9 @@ class CreateAutomobilesTable extends Migration
             $table->string('car_owner',20)->comment('车主')->nullable();
             $table->decimal('price')->comment('购买价格');
             $table->string('oil_wear',30)->comment('日常油耗')->nullable();
-            $table->string('engine_num',100)->comment('发动机号')->nullable();
-            $table->string('vin',100)->comment('车架号')->nullable();
-            $table->string('loads',20)->comment('载重')->nullable();
+            $table->string('engine_num', 100)->comment('发动机号')->nullable();
+            $table->string('vin', 100)->comment('车架号')->nullable();
+            $table->string('loads', 20)->comment('载重')->nullable();
             $table->integer('stand_id')->comment('项目部ID');
             $table->integer('user_id')->comment('驾驶员');
             $table->tinyInteger('nature')->comment('车辆性质 1:自有 2:租赁');
@@ -35,7 +35,7 @@ class CreateAutomobilesTable extends Migration
             $table->date('bought_at')->comment('购入时间');
             $table->timestamps();
         });
-        DB::statement(" ALTER TABLE automobiles comment '维护车辆表' ");
+        DB::statement(" ALTER TABLE automobiles comment '车辆表' ");
 
         $id = DB::table('admin_menu')->where('title', '区站基础资料')->value('id');
         $data = [

@@ -16,7 +16,7 @@ class AutomobileController extends AdminController
      *
      * @var string
      */
-    protected $title = '维护车辆';
+    protected $title = '车辆';
 
     /**
      * Make a grid builder.
