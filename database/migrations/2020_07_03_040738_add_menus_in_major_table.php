@@ -18,7 +18,7 @@ class AddMenusInMajorTable extends Migration
             [
                 'parent_id' => $id,
                 'order' => 2,
-                'title' => '维护专业管理',
+                'title' => '专业管理',
                 'icon' => 'fa-bookmark-o',
                 'uri' => 'district/majors',
                 'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
@@ -35,6 +35,6 @@ class AddMenusInMajorTable extends Migration
      */
     public function down()
     {
-        DB::table('admin_menu')->where('title', '维护专业管理')->delete();
+        DB::table('admin_menu')->where('title', '专业管理')->delete();
     }
 }

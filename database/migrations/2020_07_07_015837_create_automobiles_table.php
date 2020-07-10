@@ -42,7 +42,7 @@ class CreateAutomobilesTable extends Migration
             [
                 'parent_id' => $id,
                 'order' => 7,
-                'title' => '维护车辆管理',
+                'title' => '车辆管理',
                 'icon' => 'fa-car',
                 'uri' => 'district/automobiles',
                 'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
@@ -60,6 +60,6 @@ class CreateAutomobilesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('automobiles');
-        DB::table('admin_menu')->where('title', '维护车辆管理')->delete();
+        DB::table('admin_menu')->where('title', '车辆管理')->delete();
     }
 }

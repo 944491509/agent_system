@@ -6,7 +6,6 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use App\Models\District\User;
 use App\Dao\District\AreaStandDao;
-use App\Models\District\AreaStand;
 use App\Models\District\Automobile;
 use Encore\Admin\Controllers\AdminController;
 
@@ -85,23 +84,28 @@ class AutomobileController extends AdminController
         $form = new Form($automobile);
         $type = $automobile->allCatType();
         $form->column(1/2, function ($form) use ($type, $stands, $nature, $use){
-            $form->text('number', __('Number'));
-            $form->select('type', __('Type'))->options($type);
+            $form->text('number', __('Number'))
+                ->creationRules(['required', "unique:automobiles"])
+                ->updateRules(['required', "unique:automobiles,number,{{id}}"]);
+            $form->select('type', __('Type'))->options($type)->required();
             $form->select('stand_id', __('Stand'))->options($stands)
-                ->load('user_id', '/api/stand/get-driver-stand', 'id', 'name');
+                ->load('user_id', '/api/stand/get-driver-stand', 'id', 'name')->required();
             $form->select('user_id', __('Driver'))->options(function ($id) {
                 return User::where('id', $id)->pluck('name', 'id'); // 回显
-            });
+            })->required();
 
-            $form->select('nature', __('Nature'))->options($nature);
-            $form->select('use', __('Use'))->options($use);
-            $form->date('bought_at', __('Bought at'))->default(date('Y-m-d'));
+            $form->select('nature', __('Nature'))->options($nature)->required();
+            $form->select('use', __('Use'))->options($use)->required();
+
             $form->text('car_owner', __('Car owner'));
-            $form->currency('price', '购买'.__('Price'))->symbol('￥');
             $form->text('manufacturers', __('Manufacturers'));
+            $form->currency('price', '购买'.__('Price'))->symbol('￥')->required();
+            $form->currency('rent', __('Rent'))->symbol('￥')->required();
+            $form->date('bought_at', __('Bought at'))->default(date('Y-m-d'));
         });
 
         $form->column(1/2, function ($form) {
+
             $form->text('model', '车辆'.__('Model'));
             $form->text('displacement', __('Displacement'));
             $form->text('bought_company', __('Bought company'));
@@ -109,13 +113,9 @@ class AutomobileController extends AdminController
             $form->text('engine_num', __('Engine num'));
             $form->text('vin', __('Vin'));
             $form->text('loads', __('Loads'));
+            $form->multipleImage('images','图片')->pathColumn('path')->move('automobile');
             $form->textarea('explain', '车辆'.__('Explain'));
         });
-
-
-
-
-
 
         return $form;
     }
