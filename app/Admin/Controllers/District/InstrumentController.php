@@ -43,7 +43,7 @@ class InstrumentController extends AdminController
 
         $grid->column('money', '购买金额')->display(function () {
             if (empty($this->money)) {
-                return '';
+                return '0 元';
             } else {
                 return $this->money . '  元';
             }
