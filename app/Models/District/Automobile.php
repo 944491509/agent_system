@@ -45,9 +45,9 @@ class Automobile extends Model
     const SEDAN_CAR = 2;
     const VAN = 3;
 
-    const PASSENGER_CAR_TEXT = "小型普通客车";
+    const PASSENGER_CAR_TEXT = "皮卡";
     const SEDAN_CAR_TEXT = "小型轿车";
-    const VAN_TEXT = "小型客货两用车";
+    const VAN_TEXT = "面包车";
 
     // 车辆性质
     const ONESELF = 1; // 自有
@@ -147,6 +147,11 @@ class Automobile extends Model
      */
     public function driver() {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+
+    public function images() {
+        return $this->hasMany(AutomobileImage::class, 'automobile_id');
     }
 
 
