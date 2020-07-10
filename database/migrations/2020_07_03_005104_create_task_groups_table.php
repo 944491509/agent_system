@@ -32,7 +32,7 @@ class CreateTaskGroupsTable extends Migration
             [
                 'parent_id' => $id,
                 'order' => 5,
-                'title' => '维护班组管理',
+                'title' => '班组管理',
                 'icon' => 'fa-group',
                 'uri' => 'district/task-groups',
                 'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
@@ -51,8 +51,8 @@ class CreateTaskGroupsTable extends Migration
     {
         Schema::dropIfExists('task_groups');
         Schema::table('departments', function (Blueprint $table) {
-            $table->string('group')->comment('维护班组管理');
+            $table->string('group')->comment('班组管理');
         });
-        DB::table('admin_menu')->where('title', '维护班组管理')->delete();
+        DB::table('admin_menu')->where('title', '班组管理')->delete();
     }
 }

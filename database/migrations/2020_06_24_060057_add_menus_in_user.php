@@ -19,7 +19,7 @@ class AddMenusInUser extends Migration
             [
                 'parent_id' => $id,
                 'order' => 2,
-                'title' => '维护人员管理',
+                'title' => '人员管理',
                 'icon' => 'fa-user',
                 'uri' => 'district/users',
                 'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
@@ -36,6 +36,6 @@ class AddMenusInUser extends Migration
      */
     public function down()
     {
-        DB::table('admin_menu')->where('title','维护人员管理')->delete();
+        DB::table('admin_menu')->where('title','人员管理')->delete();
     }
 }

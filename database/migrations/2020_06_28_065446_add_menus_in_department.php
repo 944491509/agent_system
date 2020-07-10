@@ -19,7 +19,7 @@ class AddMenusInDepartment extends Migration
             [
                 'parent_id' => $id,
                 'order' => 3,
-                'title' => '维护部门管理',
+                'title' => '部门管理',
                 'icon' => 'fa-group',
                 'uri' => 'district/departments',
                 'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
@@ -36,6 +36,6 @@ class AddMenusInDepartment extends Migration
      */
     public function down()
     {
-        DB::table('admin_menu')->where('title','维护部门管理')->delete();
+        DB::table('admin_menu')->where('title','部门管理')->delete();
     }
 }

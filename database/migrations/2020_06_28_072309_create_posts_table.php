@@ -31,7 +31,7 @@ class CreatePostsTable extends Migration
             [
                 'parent_id' => $id,
                 'order' => 4,
-                'title' => '维护岗位管理',
+                'title' => '岗位管理',
                 'icon' => 'fa-bars',
                 'uri' => 'district/posts',
                 'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
@@ -50,6 +50,6 @@ class CreatePostsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('posts');
-        DB::table('admin_menu')->where('title','维护岗位管理')->delete();
+        DB::table('admin_menu')->where('title','岗位管理')->delete();
     }
 }

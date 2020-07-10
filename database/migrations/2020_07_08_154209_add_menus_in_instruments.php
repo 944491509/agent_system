@@ -19,7 +19,7 @@ class AddMenusInInstruments extends Migration
             [
                 'parent_id' => $id,
                 'order' => 12,
-                'title' => '维护仪器管理',
+                'title' => '仪器管理',
                 'icon' => 'fa-balance-scale',
                 'uri' => 'district/instruments',
                 'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
@@ -36,6 +36,6 @@ class AddMenusInInstruments extends Migration
      */
     public function down()
     {
-        DB::table('admin_menu')->where('title', '维护仪器管理')->delete();
+        DB::table('admin_menu')->where('title', '仪器管理')->delete();
     }
 }
