@@ -77,13 +77,26 @@ class InstrumentController extends AdminController
         $areaDao = $dao->getAllAreaStand();
         $area = $areaDao->pluck('name', 'id');
 
-        $form->select('area_stand_id', '所属项目部')->options($area)->required();
-        $form->text('name', '仪器名称')->required();
-        $form->text('model', __('Model'))->required();
-        $form->number('number', '数量')->default(1)->min(1);
-        $form->text('unit', '维护仪器单位');
-        $form->text('factory', '生产厂家');
-
+        $form->column(1 / 2, function ($form) use ($area) {
+            $form->select('area_stand_id', '所属项目部')->options($area)->required();
+            $form->text('name', '仪器名称')->required();
+            $form->text('model', '仪器型号')->required();
+            $form->number('number', '购买数量')->default(1)->min(1);
+            $form->text('unit', '维护仪器单位');
+            $form->text('factory', '生产厂家');
+        });
+        $form->column(1 / 2, function ($form) use ($area) {
+            $form->text('serial_number', '资产序列号')->required();
+            $form->radio('attributes', '资产属性')->options(Instrument::buyAttribute())->default(Instrument::PURCHASE)->required();
+            $form->date('purchase_time', '购买时间')->required();
+            $form->text('tag', '资产标签')->required();
+            $form->multipleImage('images', '资产图片')
+                ->pathColumn('path')
+                ->move('instrument')
+                ->help('上传多张图片 请在选择图片时按住 ctrl ')
+                ->required()
+                ->removable();
+        });
         return $form;
     }
 }
