@@ -65,12 +65,18 @@ return [
         ],
 
         'admin' => [
-            'driver'     => 'local',
-            'root'       => storage_path('app/public'),
+            'driver' => 'local',
+            'root' => storage_path('app/public'),
             'visibility' => 'public',
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/storage',
         ],
-
+        // 仪器图片
+        'instrument' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/instrument'),
+            'visibility' => 'public',
+            'url' => env('APP_URL') . '/storage',
+        ],
 
     ],
 

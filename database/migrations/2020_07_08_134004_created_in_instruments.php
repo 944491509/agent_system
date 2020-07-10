@@ -23,6 +23,7 @@ class CreatedInInstruments extends Migration
             $table->string('factory')->nullable()->comment('生产厂家');
             $table->timestamps();
         });
+        DB::statement(" ALTER TABLE instruments comment '仪器表' ");
     }
 
     /**
