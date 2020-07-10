@@ -16,7 +16,7 @@ class PostController extends AdminController
      *
      * @var string
      */
-    protected $title = '维护岗位';
+    protected $title = '岗位管理';
 
     /**
      * Make a grid builder.
@@ -39,9 +39,6 @@ class PostController extends AdminController
         $grid->column('updated_at', __('Updated at'));
 
         $grid->disableFilter(); // 去掉筛选
-        $grid->actions(function ($actions) {
-            $actions->disableDelete(); // todo 暂时关闭删除 删除逻辑后需要修改
-        });
 
         return $grid;
     }

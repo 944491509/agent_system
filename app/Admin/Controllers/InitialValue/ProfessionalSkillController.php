@@ -37,9 +37,6 @@ class ProfessionalSkillController extends AdminController
                 return join(' ', $res);
         });
 
-        $grid->actions(function ($actions) {
-            $actions->disableDelete(); // todo 暂时关闭删除 删除逻辑后需要修改
-        });
         return $grid;
     }
 

@@ -17,7 +17,7 @@ class TaskGroupController extends AdminController
      *
      * @var string
      */
-    protected $title = '班组';
+    protected $title = '班组管理';
 
     /**
      * Make a grid builder.
@@ -36,9 +36,7 @@ class TaskGroupController extends AdminController
         $grid->column('updated_at', __('Updated at'));
 
         $grid->disableFilter(); // 去掉筛选
-        $grid->actions(function ($actions) {
-            $actions->disableDelete(); // todo 暂时关闭删除 删除逻辑后需要修改
-        });
+
 
         return $grid;
     }

@@ -17,7 +17,7 @@ class DepartmentController extends AdminController
      *
      * @var string
      */
-    protected $title = '维护部门管理';
+    protected $title = '部门管理';
 
     /**
      * Make a grid builder.
