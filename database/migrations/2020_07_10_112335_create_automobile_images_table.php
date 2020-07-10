@@ -16,9 +16,9 @@ class CreateAutomobileImagesTable extends Migration
         Schema::create('automobile_images', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('automobile_id')->comment('汽车id');
-            $table->string('path',100)->comment('图片路径');
+            $table->string('path', 100)->comment('图片路径');
         });
-        DB::statement(" ALTER TABLE automobile_images comment '维护车辆图片表' ");
+        DB::statement(" ALTER TABLE automobile_images comment '车辆图片表' ");
         Schema::table('automobiles', function (Blueprint $table) {
             $table->decimal('rent')->comment('租金金额')->nullable();
         });

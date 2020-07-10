@@ -13,7 +13,7 @@ class AddMenusInInstruments extends Migration
      */
     public function up()
     {
-        // 维护仪器管理二级菜单
+        // 仪器管理二级菜单
         $id = DB::table('admin_menu')->where('title', '区站基础资料')->value('id');
         $data = [
             [

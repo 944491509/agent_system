@@ -64,9 +64,7 @@ class AreaStandController extends AdminController
 
         $grid->column('remark', __('Remark'));
         $grid->column('created_at', __('Created at'));
-        $grid->actions(function ($actions) {
-            $actions->disableDelete(); // todo 暂时关闭删除 删除逻辑后需要修改
-        });
+
         return $grid;
     }
 

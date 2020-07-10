@@ -18,7 +18,7 @@ class MajorController extends AdminController
      *
      * @var string
      */
-    protected $title = '维护专业';
+    protected $title = '专业管理';
 
     /**
      * Make a grid builder.
@@ -49,9 +49,6 @@ class MajorController extends AdminController
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
 
-        $grid->actions(function ($actions) {
-            $actions->disableDelete(); // todo 暂时关闭删除 删除逻辑后需要修改
-        });
 
         return $grid;
     }

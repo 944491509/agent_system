@@ -13,14 +13,14 @@ class AddMenusInDepartment extends Migration
      */
     public function up()
     {
-        // 维护部门管理二级菜单
+        // 部门管理二级菜单
         $id = DB::table('admin_menu')->where('title', '区站基础资料')->value('id');
         $data = [
             [
                 'parent_id' => $id,
                 'order' => 3,
                 'title' => '部门管理',
-                'icon' => 'fa-group',
+                'icon' => 'fa-gears',
                 'uri' => 'district/departments',
                 'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
                 'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
