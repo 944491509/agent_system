@@ -34,4 +34,9 @@ Route::group([
 
     });
 
+    // 网络故障
+    $router->group(['prefix' => 'fault'], function (Router $router) {
+        $router->resource('source', Fault\SourceController::class);
+    });
+
 });
