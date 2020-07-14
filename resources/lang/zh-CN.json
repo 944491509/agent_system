@@ -35,5 +35,8 @@
     "Use" : "车辆用途",
     "Bought at" : "购入时间",
     "Driver" : "驾驶员",
-    "Rent" : "租金"
+    "Rent" : "租金",
+    "Source" : "来源",
+    "Times" : "时限",
+    "Hour" : "小时"
 }

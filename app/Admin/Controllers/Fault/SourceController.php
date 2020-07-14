@@ -30,7 +30,6 @@ class SourceController extends AdminController
         $grid->column('name', __('Name'));
         $grid->column('stand.name', __('Stand'));
         $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
 
         return $grid;
     }

@@ -49,3 +49,9 @@ Route::group(['prefix'=> 'stand'],function () {
     Route::get('get-driver-stand', 'Api\District\UserController@getDriverByStandId');
 
 });
+
+// 故障模块
+Route::group(['prefix'=> 'fault'],function () {
+    Route::get('getSourceByStandId', 'Api\Fault\SourceController@getSourceByStandId');
+
+});
