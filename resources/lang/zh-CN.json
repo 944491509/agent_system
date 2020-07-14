@@ -31,12 +31,17 @@
     "Engine num" : "发动机号",
     "Vin" : "车架号",
     "Loads" : "载重",
-    "Nature" : "车辆性质",
+    "Nature" : "性质",
     "Use" : "车辆用途",
     "Bought at" : "购入时间",
     "Driver" : "驾驶员",
     "Rent" : "租金",
     "Source" : "来源",
     "Times" : "时限",
-    "Hour" : "小时"
+    "Hour" : "小时",
+    "Kind" : "种类",
+    "HappenTime" : "发生时间",
+    "AcceptTime" : "接单时间",
+    "Business" : "业务",
+    "Message" : "信息"
 }

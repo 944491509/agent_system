@@ -16,7 +16,8 @@ class CreateNetworkFaultNaturesTable extends Migration
         Schema::create('network_fault_natures', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('area_stand_id')->comment('项目部ID');
-            $table->integer('source_id')->comment('故障来源id');
+            $table->tinyInteger('type')->default(1)->comment('故障类型 1:网络故障 2:动环故障');
+            $table->integer('source_id')->comment('故障来源id')->nullable();
             $table->string('name')->comment('名称');
             $table->timestamps();
         });

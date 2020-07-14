@@ -29,6 +29,9 @@ class NatureController extends AdminController
         $grid = new Grid(new NetworkFaultNature());
 
         $grid->column('id', __('Id'));
+        $grid->column('type', '故障'.__('Type'))->display(function () {
+            return $this->typeText();
+        });
         $grid->column('source.name', '故障'.__('Source'));
         $grid->column('name', __('Name'));
         $grid->column('times',__('Times'))->display(function ($class) {
@@ -51,19 +54,26 @@ class NatureController extends AdminController
      */
     protected function form()
     {
-
-        $form = new Form(new NetworkFaultNature());
+        $model = new NetworkFaultNature();
+        $type = $model->allType();
+        $form = new Form($model);
         $areaStandDao  = new AreaStandDao;
         $stands = $areaStandDao->getAreaStandOption();
-        $form->select('area_stand_id', __('Stand'))->options($stands)
-            ->load('source_id','/api/fault/getSourceByStandId', 'id', 'name');
-        $form->select('source_id', '故障'.__('Source'))->options(function ($id) {
-            return NetworkFaultSource::where('id', $id)->pluck('name', 'id'); // 回显
-        });
-        $form->text('name', '性质'.__('Name'));
-        $form->hasMany('times',__('Times'), function (Form\NestedForm $form) {
-            $form->number('hour', __('Hour'));
-        });
+        $form->radio('type', '故障'.__('Type'))
+            ->options($type)->when(1, function (Form $form) use ($stands){
+
+                $form->select('area_stand_id', __('Stand'))->options($stands)
+                    ->load('source_id','/api/fault/getSourceByStandId', 'id', 'name');
+                $form->select('source_id', '故障'.__('Source'))->options(function ($id) {
+                    return NetworkFaultSource::where('id', $id)->pluck('name', 'id'); // 回显
+                });
+                $form->hasMany('times',__('Times'), function (Form\NestedForm $form) {
+                    $form->number('hour', __('Hour'));
+                });
+            })->when(2, function (Form $form) use($stands){
+                $form->select('area_stand_id', __('Stand'))->options($stands);
+            })->required();
+            $form->text('name', '性质'.__('Name'))->required();
 
         return $form;
     }

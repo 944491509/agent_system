@@ -17,7 +17,7 @@ class AddMenusInNetworkFaultSourcesTable extends Migration
         $menu = [
             'parent_id' => 0,
             'order' => 3,
-            'title' => '网络故障',
+            'title' => '网络管理',
             'icon' => 'fa-exclamation-triangle',
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
@@ -42,7 +42,7 @@ class AddMenusInNetworkFaultSourcesTable extends Migration
      */
     public function down()
     {
-        $title = ['网络故障','故障来源'];
+        $title = ['故障管理','故障来源'];
         DB::table('admin_menu')->whereIn('title',$title)->delete();
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddMenusInNetworkFaultNaturesTable extends Migration
+class AddMenuusInNetworkFaultsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -18,9 +18,9 @@ class AddMenusInNetworkFaultNaturesTable extends Migration
             [
                 'parent_id' => $id,
                 'order' => 1,
-                'title' => '故障性质',
-                'icon' => 'fa-code-fork',
-                'uri' => 'fault/nature',
+                'title' => '故障列表',
+                'icon' => 'fa-list',
+                'uri' => 'fault/list',
                 'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
                 'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
             ]
@@ -35,7 +35,7 @@ class AddMenusInNetworkFaultNaturesTable extends Migration
      */
     public function down()
     {
-        $title = ['故障性质'];
+        $title = ['故障列表'];
         DB::table('admin_menu')->whereIn('title',$title)->delete();
     }
 }

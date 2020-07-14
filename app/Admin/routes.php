@@ -40,6 +40,8 @@ Route::group([
         $router->resource('source', Fault\SourceController::class);
         // 故障性质
         $router->resource('nature', Fault\NatureController::class);
+        // 故障列表
+        $router->resource('list', Fault\NetworkFaultController::class);
     });
 
 });
