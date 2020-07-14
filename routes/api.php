@@ -47,5 +47,11 @@ Route::group(['prefix'=> 'stand'],function () {
     Route::get('get-major-classes', 'Api\District\AreaStandController@getProfessionalClasses');
     // 获取当前项目部下的司机
     Route::get('get-driver-stand', 'Api\District\UserController@getDriverByStandId');
+});
 
+Route::group(['prefix' => 'trouble'], function () {
+    // 根据项目部获取人员
+    Route::get('get-personnel', 'Api\UserController@index');
+    // 所有网络类别
+    Route::get('get-category', 'Api\UserController@category');
 });

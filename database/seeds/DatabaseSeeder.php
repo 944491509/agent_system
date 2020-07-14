@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\Trouble\TroubleData;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,6 +12,29 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        $arr = [
+            1 => [
+                '动力空调' => ['动力设备', '空调设备'],
+                '机房综合' => ['宏基站', '室外站', '室分点'],
+                '铁塔天馈' => ['单塔']
+            ],
+            2 => [
+                '传输路线' => ['一级干线', '二级干线', '本地网', '接入网'],
+                '动力空调' => ['动力设备', '空调设备'],
+                '公众客户' => ['数固客户'],
+                '机房综合' => ['一体化接入机房', '核心机房', '汇聚机房', '接入机房', '客户机房'],
+                '集团客户' => ['跨省跨域客户', '本地一级集团客户', '本地二级集团客户', '本地三级集团客户']
+            ]
+        ];
+
+        foreach ($arr as $key => $value) {
+            foreach ($value as $ke => $val) {
+                $id = TroubleData::insertGetId(['p_id' => $key, 'name' => $ke]);
+                foreach ($val as $v) {
+                    TroubleData::create(['p_id' => $id, 'name' => $v]);
+                }
+            }
+        }
+
     }
 }

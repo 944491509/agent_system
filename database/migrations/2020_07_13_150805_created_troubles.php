@@ -13,9 +13,10 @@ class CreatedTroubles extends Migration
      */
     public function up()
     {
-        Schema::create('troubles', function (Blueprint $table) {
+        Schema::create('trouble_forms', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('area_stand_id')->comment('项目部');
+            $table->integer('user_id')->comment('隐患申报人员');
             $table->integer('network_type')->comment('网络类型');
             $table->integer('category')->comment('网络专业类别');
             $table->integer('network_name')->comment('网络专业名称');
@@ -29,8 +30,10 @@ class CreatedTroubles extends Migration
             $table->tinyInteger('influence')->nullable()->comment('隐患影响等级');
             $table->tinyInteger('deal_with')->nullable()->comment('隐患处理等级');
             $table->tinyInteger('suggest')->nullable()->comment('建议处理方式');
+            $table->tinyInteger('status')->comment('状态: 0未提交 1提交 2已审核');
             $table->timestamps();
         });
+        DB::statement(" ALTER TABLE trouble_forms comment '网络隐患申请表' ");
     }
 
     /**
@@ -40,6 +43,6 @@ class CreatedTroubles extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('troubles');
+        Schema::dropIfExists('trouble_forms');
     }
 }

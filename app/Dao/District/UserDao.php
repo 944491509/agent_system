@@ -3,7 +3,6 @@
 
 namespace App\Dao\District;
 
-
 use App\Models\District\User;
 
 class UserDao
@@ -20,4 +19,6 @@ class UserDao
         return User::join('user_profiles','users.id', '=', 'user_profiles.user_id')
             ->where($map)->select($field)->get();
     }
+
+
 }
