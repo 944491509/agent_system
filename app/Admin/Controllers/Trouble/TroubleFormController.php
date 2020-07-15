@@ -4,6 +4,7 @@ namespace App\Admin\Controllers\Trouble;
 
 use App\Dao\District\AreaStandDao;
 use App\Models\District\User;
+use App\Models\Trouble\TroubleData;
 use App\Models\Trouble\TroubleForm;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -102,15 +103,17 @@ class TroubleFormController extends AdminController
             return User::where('id', $id)->pluck('name', 'id');
         })->required();
 
-        $form->select('network_type', '网络类型')->options(TroubleForm::getAllNetworkType())
-            ->load('category', '/api/trouble/get-category', 'id', 'name')
-            ->required();
+        $form->select('network_type', '网络类型')->options(function () {
+            return TroubleData::where('p_id', 0)->pluck('name', 'id');
+        })->load('category', '/api/trouble/get-category', 'id', 'name')->required();
 
-        $form->select('category', '网络专业类别')->options(function ($key) {
+        $form->select('category', '网络专业类别')->options(function ($id) {
+            return TroubleData::where('id', $id)->pluck('name', 'id');
+        })->load('network_name', '/api/trouble/get-category', 'id', 'name')->required();
 
-//            return TroubleForm::getNetWorkMajor($key)[0];
+        $form->select('network_name', '网络专业名称')->options(function ($id) {
+            return TroubleData::where('id', $id)->pluck('name', 'id');
         })->required();
-        $form->text('network_name', '网络专业名称')->required();
 
         $form->text('name', '业务名称')->required();
         $form->text('position', '隐患地点')->required();
@@ -119,10 +122,13 @@ class TroubleFormController extends AdminController
         $form->text('unit', '外力施工单位')->required();
         $form->text('person', '施工联系人')->required();
         $form->mobile('mobile', '施工单位电话')->required();
-        $form->switch('influence', '隐患影响等级')->required();
-        $form->switch('deal_with', '隐患处理等级')->required();
-        $form->switch('suggest', '建议处理方式')->required();
-        $form->switch('status', '状态')->required();
+        $form->select('influence', '隐患影响等级')->options(TroubleData::getAllImpactLevel())->required();
+        $form->select('deal_with', '隐患处理等级')->options(TroubleData::getAllDealWith())->required();
+        $form->select('suggest', '建议处理方式')->options(TroubleData::getAllSuggest())->required();
+        $form->radio('status', '状态')->options([
+            TroubleData::STATUS_1 => '暂存',
+            TroubleData::STATUS_2 => '提交'
+        ])->default(TroubleData::STATUS_2)->required();
 
         return $form;
     }

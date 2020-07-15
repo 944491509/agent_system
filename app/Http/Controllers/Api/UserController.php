@@ -4,7 +4,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Dao\District\UserProfileDao;
-use App\Models\Trouble\TroubleForm;
+use App\Dao\Trouble\TroubleDataDao;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -38,7 +38,8 @@ class UserController extends Controller
     public function category(Request $request)
     {
         $id = $request->get('q');
-        $result = TroubleForm::getNetWorkMajor($id);
+        $dao = new TroubleDataDao;
+        $result = $dao->getTroubleDataByNetWork($id);
 
         return response()->json($result);
     }
