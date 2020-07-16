@@ -9,6 +9,7 @@ use App\Models\Trouble\TroubleForm;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
+use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
 class TroubleFormController extends AdminController
@@ -29,24 +30,36 @@ class TroubleFormController extends AdminController
     {
         $grid = new Grid(new TroubleForm());
 
-        $grid->column('id', __('Id'));
-        $grid->column('area_stand_id', __('Area stand id'));
-        $grid->column('network_type', __('Network type'));
-        $grid->column('category', __('Category'));
-        $grid->column('network_name', __('Network name'));
-        $grid->column('name', __('Name'));
-        $grid->column('position', __('Position'));
-        $grid->column('distance', __('Distance'));
-        $grid->column('reason', __('Reason'));
-        $grid->column('unit', __('Unit'));
-        $grid->column('person', __('Person'));
-        $grid->column('mobile', __('Mobile'));
-        $grid->column('influence', __('Influence'));
-        $grid->column('deal_with', __('Deal with'));
-        $grid->column('suggest', __('Suggest'));
-        $grid->column('status', __('Status'));
+        $grid->column('area_stand_id', '项目部')->display(function () {
+            return $this->stand->name;
+        });
+        $grid->column('user_id', '隐患申报人员')->display(function () {
+            return $this->user->name;
+        });
+        $grid->column('network_type', '网络类型')->display(function () {
+            return $this->type->name;
+        });
+        $grid->column('category', '网络专业类别')->display(function () {
+            return $this->network_category->name;
+        });
+        $grid->column('network_name', '网络专业名称')->display(function () {
+            return $this->network->name;
+        });
+        $grid->column('name', '业务名称');
+        $grid->column('position', '隐患地点');
+        $grid->column('distance', '距离');
+        $grid->column('reason', '隐患原因');
+        $grid->column('unit', '施工单位');
+        $grid->column('person', '施工联系人');
+        $grid->column('mobile', '施工单位电话');
+        $grid->column('influence', '隐患影响等级');
+        $grid->column('deal_with', '隐患处理等级');
+        $grid->column('suggest', '建议处理方式');
+        $grid->column('status', '状态')->using([
+            TroubleData::STATUS_1 => '暂存',
+            TroubleData::STATUS_2 => '已提交'
+        ]);
         $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
 
         return $grid;
     }
@@ -96,9 +109,11 @@ class TroubleFormController extends AdminController
         $areaDao = $dao->getAllAreaStand();
         $area = $areaDao->pluck('name', 'id');
 
-        $form->select('profile.area_stand_id', '所属项目部')
-            ->options($area)->load('user_id', '/api/trouble/get-personnel', 'id', 'name')
+        $form->select('area_stand_id', '所属项目部')
+            ->options($area)
+            ->load('user_id', '/api/trouble/get-personnel', 'id', 'name')
             ->required();
+
         $form->select('user_id', '隐患申报人员')->options(function ($id) {
             return User::where('id', $id)->pluck('name', 'id');
         })->required();
@@ -128,7 +143,7 @@ class TroubleFormController extends AdminController
         $form->radio('status', '状态')->options([
             TroubleData::STATUS_1 => '暂存',
             TroubleData::STATUS_2 => '提交'
-        ])->default(TroubleData::STATUS_2)->required();
+        ])->help('注意: 提交给管理员后不可以修改')->default(TroubleData::STATUS_1)->required();
 
         return $form;
     }

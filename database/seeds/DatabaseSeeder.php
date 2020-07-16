@@ -13,12 +13,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $arr = [
-            1 => [
+            '移网' => [
                 '动力空调' => ['动力设备', '空调设备'],
                 '机房综合' => ['宏基站', '室外站', '室分点'],
                 '铁塔天馈' => ['单塔']
             ],
-            2 => [
+            '固网' => [
                 '传输路线' => ['一级干线', '二级干线', '本地网', '接入网'],
                 '动力空调' => ['动力设备', '空调设备'],
                 '公众客户' => ['数固客户'],
@@ -28,10 +28,11 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($arr as $key => $value) {
+            $id = TroubleData::insertGetId(['p_id' => 0, 'name' => $key]);
             foreach ($value as $ke => $val) {
-                $id = TroubleData::insertGetId(['p_id' => $key, 'name' => $ke]);
-                foreach ($val as $v) {
-                    TroubleData::create(['p_id' => $id, 'name' => $v]);
+                $d = TroubleData::insertGetId(['p_id' => $id, 'name' => $ke]);
+                foreach ($val as $k => $v) {
+                    TroubleData::create(['p_id' => $d, 'name' => $v]);
                 }
             }
         }

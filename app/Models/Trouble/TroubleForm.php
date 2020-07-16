@@ -2,6 +2,8 @@
 
 namespace App\Models\Trouble;
 
+use App\Models\District\AreaStand;
+use App\Models\District\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -42,5 +44,31 @@ class TroubleForm extends Model
         'distance', 'reason', 'unit', 'person', 'mobile', 'influence', 'deal_with', 'suggest', 'status',
         'created_at', 'updated_at'
     ];
+
+    public function stand()
+    {
+        return $this->belongsTo(AreaStand::class, 'area_stand_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(TroubleData::class, 'network_type');
+    }
+
+    public function network_category()
+    {
+        return $this->belongsTo(TroubleData::class, 'category');
+    }
+
+    public function network()
+    {
+        return $this->belongsTo(TroubleData::class, 'network_name');
+    }
+
 
 }
