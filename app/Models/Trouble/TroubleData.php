@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class TroubleData extends Model
 {
+    protected $table = 'trouble_datas';
+
     /**
      * The "type" of the auto-incrementing ID.
      *
