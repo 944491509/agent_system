@@ -31,7 +31,12 @@ Route::group([
     // 基础资料
     $router->group(['prefix' => 'initialValue'], function (Router $router) {
         $router->resource('professional-skills', InitialValue\ProfessionalSkillController::class);
+    });
 
+
+    // 网络隐患
+    $router->group(['prefix' => 'trouble'], function (Router $router) {
+        $router->resource('trouble-form', Trouble\TroubleFormController::class);
     });
 
     // 网络故障
