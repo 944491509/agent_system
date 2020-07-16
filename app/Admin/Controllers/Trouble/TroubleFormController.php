@@ -60,7 +60,13 @@ class TroubleFormController extends AdminController
             TroubleData::STATUS_2 => '已提交'
         ]);
         $grid->column('created_at', __('Created at'));
-
+        $grid->actions(function ($actions) {
+            $actions->disableDelete();
+            $actions->disableView();
+            if ($actions->row->status == 2) {
+                $actions->disableEdit();
+            }
+        });
         return $grid;
     }
 
