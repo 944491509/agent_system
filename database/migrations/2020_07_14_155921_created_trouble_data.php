@@ -29,6 +29,6 @@ class CreatedTroubleData extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('trouble_data');
+        Schema::dropIfExists('trouble_datas');
     }
 }
