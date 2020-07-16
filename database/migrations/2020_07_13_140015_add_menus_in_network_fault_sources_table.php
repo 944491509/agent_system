@@ -17,7 +17,7 @@ class AddMenusInNetworkFaultSourcesTable extends Migration
         $menu = [
             'parent_id' => 0,
             'order' => 3,
-            'title' => '网络管理',
+            'title' => '故障管理',
             'icon' => 'fa-exclamation-triangle',
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
