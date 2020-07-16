@@ -55,3 +55,13 @@ Route::group(['prefix' => 'trouble'], function () {
     // 所有网络类别
     Route::get('get-category', 'Api\UserController@category');
 });
+
+// 故障模块
+Route::group(['prefix'=> 'fault'],function () {
+    // 根据项目部获取故障来源
+    Route::get('getSourceByStandId', 'Api\Fault\SourceController@getSourceByStandId');
+    // 根据来源获取故障性质
+    Route::get('getNatureBySourceId', 'Api\Fault\NatureController@getNatureBySourceId');
+    // 根据性质id查询时限
+    Route::get('getTimesByNatureId', 'Api\Fault\NatureController@getTimesByNatureId');
+});

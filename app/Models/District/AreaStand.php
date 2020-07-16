@@ -176,4 +176,9 @@ class AreaStand extends Model
 
     }
 
+
+    public function departments() {
+        return $this->hasMany(Department::class, 'area_stand_id');
+    }
+
 }
