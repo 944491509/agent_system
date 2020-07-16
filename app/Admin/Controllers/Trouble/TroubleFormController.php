@@ -61,8 +61,8 @@ class TroubleFormController extends AdminController
         ]);
         $grid->column('created_at', __('Created at'));
         $grid->actions(function ($actions) {
-            $actions->disableDelete();
-            $actions->disableView();
+        $actions->disableDelete();
+        $actions->disableView();
             if ($actions->row->status == 2) {
                 $actions->disableEdit();
             }
