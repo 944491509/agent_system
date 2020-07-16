@@ -33,8 +33,20 @@ Route::group([
         $router->resource('professional-skills', InitialValue\ProfessionalSkillController::class);
     });
 
+
     // 网络隐患
     $router->group(['prefix' => 'trouble'], function (Router $router) {
         $router->resource('trouble-form', Trouble\TroubleFormController::class);
     });
+
+    // 网络故障
+    $router->group(['prefix' => 'fault'], function (Router $router) {
+        // 故障来源
+        $router->resource('source', Fault\SourceController::class);
+        // 故障性质
+        $router->resource('nature', Fault\NatureController::class);
+        // 故障列表
+        $router->resource('list', Fault\NetworkFaultController::class);
+    });
+
 });

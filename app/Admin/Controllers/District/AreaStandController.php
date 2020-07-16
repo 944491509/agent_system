@@ -62,6 +62,12 @@ class AreaStandController extends AdminController
             return $this->explainText();
         }) ;
 
+        $grid->actions(function (Grid\Displayers\Actions $actions) {
+            if (count($actions->getAttribute('departments')) > 0) {
+                $actions->disableDelete();
+            }
+        });
+
         $grid->column('remark', __('Remark'));
         $grid->column('created_at', __('Created at'));
 
@@ -125,5 +131,9 @@ class AreaStandController extends AdminController
         $form->textarea('remark', '项目部'.__('Remark'));
 
         return $form;
+    }
+
+    public function destroy($id){
+        dd($id);
     }
 }
