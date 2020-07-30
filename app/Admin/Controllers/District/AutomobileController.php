@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers\District;
 
+use App\Admin\Actions\Automobile\ImportAction;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use App\Models\District\User;
@@ -64,6 +65,10 @@ class AutomobileController extends AdminController
         });
         $grid->column('bought_at', __('Bought at'));
         $grid->column('created_at', __('Created at'));
+        // 添加到列表上
+        $grid->tools(function (Grid\Tools $tools) {
+            $tools->append(new ImportAction());
+        });
         return $grid;
     }
 
