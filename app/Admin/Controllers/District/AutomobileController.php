@@ -70,8 +70,8 @@ class AutomobileController extends AdminController
         $grid->column('created_at', __('Created at'));
         // 添加到列表上
         $grid->tools(function (Grid\Tools $tools) {
-            $tools->append(new ImportAction());
             $tools->append(new OutputAction());
+            $tools->append(new ImportAction());
         });
 
 
