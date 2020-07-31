@@ -19,9 +19,7 @@ class ImportAction extends Action
         try{
             // $request ...
             $file = $request-> file('file');
-
             Excel::import(new ImportAutomobile(),$file);
-
             return $this->response()->success('数据导入成功')->refresh();
         }catch (\Exception $e){
             return $this->response()->error($e -> getMessage());

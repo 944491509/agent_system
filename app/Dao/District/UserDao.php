@@ -21,4 +21,16 @@ class UserDao
     }
 
 
+    /**
+     * 查询user
+     * @param $map
+     * @return mixed
+     */
+    public function getUser($map) {
+        $field = ['users.id', 'name'];
+        return User::join('user_profiles','users.id', '=', 'user_profiles.user_id')
+        ->where($map)->select($field)->first();
+    }
+
+
 }

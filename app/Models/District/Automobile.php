@@ -41,10 +41,10 @@ class Automobile extends Model
         'nature', 'use', 'bought_at', 'created_at', 'updated_at'
     ];
 
+    // 车辆类型
     const PASSENGER_CAR = 1;
     const SEDAN_CAR = 2;
     const VAN = 3;
-
     const PASSENGER_CAR_TEXT = "皮卡";
     const SEDAN_CAR_TEXT = "小型轿车";
     const VAN_TEXT = "面包车";

@@ -51,4 +51,15 @@ class AreaStandDao
         return $area;
     }
 
+
+    /**
+     * 根据名称获取项目部
+     * @param $name
+     * @return mixed
+     */
+    public function getAreaStandByName($name) {
+        $map = ['name'=>$name];
+        return AreaStand::where($map)->first();
+    }
+
 }
