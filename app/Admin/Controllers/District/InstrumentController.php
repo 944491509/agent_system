@@ -99,9 +99,15 @@ class InstrumentController extends AdminController
         });
         $form->column(1 / 2, function ($form) use ($area) {
             $form->text('serial_number', '资产序列号')->required();
-            $form->radio('attributes', '资产属性')->options(Instrument::buyAttribute())->default(Instrument::PURCHASE)->required();
-            $form->currency('money', '购买金额')->symbol('￥')->required();
-            $form->date('purchase_time', '购买时间')->required();
+            $form->radio('attributes', '资产属性')->options(Instrument::buyAttribute())->default(Instrument::PURCHASE)
+                ->when('in', [Instrument::PURCHASE, Instrument::TAKEOVER], function (Form $form) {
+                    $form->currency('money', '购买金额')->symbol('￥');
+                    $form->date('purchase_time', '购买时间');
+                })->when(Instrument::LEASE, function (Form $form) {
+                    $form->currency('money', '租赁价格')->symbol('￥');
+                    $form->date('purchase_time', '租赁起始时间');
+                })->required();
+
             $form->text('tag', '资产标签')->required();
             $form->multipleImage('images', '资产图片')
                 ->pathColumn('path')

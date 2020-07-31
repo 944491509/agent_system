@@ -12,6 +12,9 @@ Route::group([
     'as' => config('admin.route.prefix') . '.',
 ], function (Router $router) {
 
+    $router->get('auth/login', 'AuthController@getLogin');
+    $router->post('auth/login', 'AuthController@postLogin');
+
     $router->get('/', 'HomeController@index')->name('home');
     $router->resource('area-stands', District\AreaStandController::class);
 

@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use Admin;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\Dashboard;
 use Encore\Admin\Layout\Column;
@@ -16,6 +17,8 @@ class HomeController extends Controller
      */
     public function index(Content $content)
     {
+//        dd(Admin::user());
+//        return  view("welcome");
         return $content
             ->title('Dashboard')
             ->description('Description.....')

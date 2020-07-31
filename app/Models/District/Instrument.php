@@ -57,8 +57,8 @@ class Instrument extends Model
     {
         return [
             self::PURCHASE => self::PURCHASE_TEXT,
-            self::LEASE => self::PURCHASE_TEXT,
-            self::TAKEOVER => self::TAKEOVER_TEXT
+            self::TAKEOVER => self::TAKEOVER_TEXT,
+            self::LEASE => self::LEASE_TEXT,
         ];
     }
 
