@@ -25,6 +25,8 @@ Route::group([
         $router->resource('task-groups', District\TaskGroupController::class);
         $router->resource('majors', District\MajorController::class);
         $router->resource('automobiles', District\AutomobileController::class);
+        $router->any('outputExcel', 'District\AutomobileController@outputExcel');
+
         $router->resource('instruments', District\InstrumentController::class);
     });
 

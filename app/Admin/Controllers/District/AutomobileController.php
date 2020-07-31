@@ -3,12 +3,15 @@
 namespace App\Admin\Controllers\District;
 
 use App\Admin\Actions\Automobile\ImportAction;
+use App\Admin\Actions\Automobile\OutputAction;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use App\Models\District\User;
 use App\Dao\District\AreaStandDao;
 use App\Models\District\Automobile;
 use Encore\Admin\Controllers\AdminController;
+use App\Admin\Extensions\ExcelExporter;
+use Illuminate\Support\Facades\Storage;
 
 class AutomobileController extends AdminController
 {
@@ -68,7 +71,11 @@ class AutomobileController extends AdminController
         // 添加到列表上
         $grid->tools(function (Grid\Tools $tools) {
             $tools->append(new ImportAction());
+            $tools->append(new OutputAction());
         });
+
+
+
         return $grid;
     }
 
@@ -104,8 +111,8 @@ class AutomobileController extends AdminController
 
             $form->text('car_owner', __('Car owner'));
             $form->text('manufacturers', __('Manufacturers'));
-            $form->currency('price', '购买'.__('Price'))->symbol('￥')->required();
-            $form->currency('rent', __('Rent'))->symbol('￥')->required();
+            $form->currency('price', '购买'.__('Price'))->symbol('￥');
+            $form->currency('rent', __('Rent'))->symbol('￥');
             $form->date('bought_at', __('Bought at'))->default(date('Y-m-d'));
         });
 
@@ -123,5 +130,14 @@ class AutomobileController extends AdminController
         });
 
         return $form;
+    }
+
+
+    /**
+     * 车辆模板
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function outputExcel() {
+        return response()->download('output/automobile.xlsx', '车辆模板.xlsx');
     }
 }
