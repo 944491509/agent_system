@@ -15,7 +15,9 @@ Route::group([
     $router->get('auth/login', 'AuthController@getLogin');
     $router->post('auth/login', 'AuthController@postLogin');
 
-    $router->get('/', 'HomeController@index')->name('home');
+    $router->get('/', 'HomeController@index');
+    $router->get('/index', 'HomeController@setIndex');
+    $router->get('/home', 'HomeController@home')->name('home');
     $router->resource('area-stands', District\AreaStandController::class);
 
     //  区站基础管理
